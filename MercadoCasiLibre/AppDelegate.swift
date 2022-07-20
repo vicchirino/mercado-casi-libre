@@ -10,10 +10,19 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let barAppearance = UINavigationBar.appearance()
+
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.backgroundColor = .yellow
+            barAppearance.standardAppearance = appearance
+            barAppearance.scrollEdgeAppearance = appearance
+        } else {
+            barAppearance.backgroundColor = .yellow
+        }
+        
         return true
     }
 
