@@ -33,6 +33,11 @@ class HomeViewController: UIViewController {
         setupViews()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        resultTableViewController.setItems(items: Item.getMockItems())
+    }
+    
     private func setupViews() {
         view.backgroundColor = .systemYellow
         self.addChild(resultTableViewController)
