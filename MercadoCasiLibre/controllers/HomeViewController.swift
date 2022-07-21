@@ -16,16 +16,13 @@ class HomeViewController: UIViewController {
         return view
     }()
     
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.black.cgColor
-        return view
+    private lazy var resultTableViewController: ResultTableController = {
+        let tableViewController = ResultTableController()
+        return tableViewController
     }()
     
     private lazy var mainStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [headerView, contentView])
+        let stackView = UIStackView(arrangedSubviews: [headerView, resultTableViewController.view])
         stackView.axis = .vertical
         return stackView
     }()
@@ -38,7 +35,10 @@ class HomeViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .systemYellow
+        self.addChild(resultTableViewController)
         view.addSubview(mainStackView)
+        
+        resultTableViewController.didMove(toParent: self)
         
         mainStackView.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges)
@@ -51,7 +51,7 @@ class HomeViewController: UIViewController {
             make.height.equalTo(60)
         }
         
-        contentView.snp.makeConstraints { make in
+        resultTableViewController.view.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom)
             make.bottom.equalTo(mainStackView.snp.bottom)
             make.leading.equalTo(mainStackView.snp.leading)
