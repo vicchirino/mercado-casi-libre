@@ -8,6 +8,7 @@ target 'MercadoCasiLibre' do
   # Pods for MercadoCasiLibre
   pod 'SnapKit', '~> 5.0.0'
   pod 'SDWebImage', '~> 5.0'
+  pod 'SwiftIcons', '~> 2.3.2'
   
   target 'MercadoCasiLibreTests' do
     inherit! :search_paths

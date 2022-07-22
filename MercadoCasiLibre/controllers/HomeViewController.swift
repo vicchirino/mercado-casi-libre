@@ -10,9 +10,8 @@ import SnapKit
 
 class HomeViewController: UIViewController {
     
-    private lazy var searchHeaderView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemYellow
+    private lazy var searchHeaderView: SearchHeaderView = {
+        let view = SearchHeaderView()
         return view
     }()
     
