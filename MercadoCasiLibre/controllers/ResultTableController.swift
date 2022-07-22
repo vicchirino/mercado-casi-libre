@@ -36,13 +36,12 @@ class ResultTableController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if items.count == 0 {
-//            setEmptyStateView()
-//        } else {
-//            removeEmptyStateView()
-//        }
-//        return items.count
-        return 190
+        if items.count == 0 {
+            setEmptyStateView()
+        } else {
+            removeEmptyStateView()
+        }
+        return items.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -54,8 +53,7 @@ class ResultTableController: UITableViewController {
             fatalError("Failed to get expected kind of reusable cell from the tableView. Expected type `ItemTableViewCell`")
         }
         
-        let item: Item = Item(title: "Item numero \(indexPath.row)", price: "\(indexPath.row * 2)", imageName: "")
-        cell.configureCell(item: item)
+        cell.configureCell(item: items[indexPath.row])
         return cell
     }
     

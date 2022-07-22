@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>id</key>
+		<integer>1</integer>
+		<key>title</key>
+		<string>Resident Evil 3 Remake Standard Edition Capcom PS4 Digita</string>
+		<key>price</key>
+		<string>2126</string>
+		<key>imageURL</key>
+		<string>https://http2.mlstatic.com/D_NQ_NP_2X_638340-MLA40931045631_022020-F.jpg</string>
+	</dict>
+	<dict>
+		<key>id</key>
+		<integer>2</integer>
+		<key>title</key>
+		<string>Cuadros Monkey Island 72x45</string>
+		<key>price</key>
+		<string>4999</string>
+		<key>imageURL</key>
+		<string>https://http2.mlstatic.com/D_NQ_NP_863818-MLA46105673935_052021-O.jpg</string>
+	</dict>
+	<dict>
+		<key>id</key>
+		<integer>3</integer>
+		<key>title</key>
+		<string>Pieza 3d - Verbcoin / The Curse Of Monkey Island</string>
+		<key>price</key>
+		<string>1072</string>
+		<key>imageURL</key>
+		<string>https://http2.mlstatic.com/D_NQ_NP_693774-MLA49550772046_042022-O.jpg</string>
+	</dict>
+	<dict>
+		<key>id</key>
+		<integer>4</integer>
+		<key>title</key>
+		<string>Monkey Island 1 + Monkey Island 2 + Monkey Island 3</string>
+		<key>price</key>
+		<string>900</string>
+		<key>imageURL</key>
+		<string>https://http2.mlstatic.com/D_NQ_NP_785668-MLA42658920001_072020-O.jpg</string>
+	</dict>
+</array>
+</plist>

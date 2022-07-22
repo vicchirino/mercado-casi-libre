@@ -7,7 +7,8 @@ target 'MercadoCasiLibre' do
 
   # Pods for MercadoCasiLibre
   pod 'SnapKit', '~> 5.0.0'
-
+  pod 'SDWebImage', '~> 5.0'
+  
   target 'MercadoCasiLibreTests' do
     inherit! :search_paths
     # Pods for testing

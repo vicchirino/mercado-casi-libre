@@ -7,11 +7,12 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 class ItemTableViewCell: UITableViewCell {
 
     static var identifier: String = "ItemTableViewCell"
-    
+        
     private lazy var title: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -70,6 +71,7 @@ class ItemTableViewCell: UITableViewCell {
         title.text = nil
         price.text = nil
         itemImageView.image = nil
+        itemImageView.sd_cancelCurrentImageLoad()
     }
     
     required init?(coder: NSCoder) {
@@ -112,7 +114,7 @@ class ItemTableViewCell: UITableViewCell {
         title.sizeToFit()
         price.text = "$\(item.price)"
         price.sizeToFit()
-        itemImageView.image = UIImage(named: "image-1.png")
+        itemImageView.sd_setImage(with: URL(string: item.imageURL))
     }
     
 }
