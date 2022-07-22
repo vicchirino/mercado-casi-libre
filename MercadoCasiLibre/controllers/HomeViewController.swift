@@ -7,8 +7,11 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 class HomeViewController: UIViewController {
+    
+    private var cancellable: AnyCancellable?
     
     private lazy var searchHeaderView: SearchHeaderView = {
         let view = SearchHeaderView()
@@ -35,13 +38,11 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupViews()
+        search()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let items = Item.getMockItems()
-        resultTableViewController.setItems(items: items)
-        filtersHeaderView.setResults(numberOfItems: items.count)
     }
     
     private func setupViews() {
@@ -76,5 +77,19 @@ class HomeViewController: UIViewController {
         }
     }
 
+    private func search() {
+        cancellable =  APIClient().getSearchWithCombine(q: "apple")
+            .receive(on: DispatchQueue.main)
+            .sink {[weak self] result in
+                switch result {
+                case .success(let search):
+                    self?.resultTableViewController.setItems(items: search.results)
+                    self?.filtersHeaderView.setResults(numberOfItems: search.results.count)
+                case .failure(let error):
+                    fatalError("Error when searching \(error)")
+                }
+            }
+    }
+    
 }
 

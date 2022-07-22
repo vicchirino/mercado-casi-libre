@@ -10,8 +10,8 @@ import SnapKit
 
 class ResultTableController: UITableViewController {
     
-    private var items: [Item] = []
-    
+    @Published private var items: [Item] = []
+
     private lazy var emptyStateView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray

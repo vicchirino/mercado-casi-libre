@@ -114,7 +114,7 @@ class ItemTableViewCell: UITableViewCell {
         title.sizeToFit()
         price.text = "$\(item.price)"
         price.sizeToFit()
-        itemImageView.sd_setImage(with: URL(string: item.imageURL))
+        itemImageView.sd_setImage(with: URL(string: item.thumbnail))
     }
     
 }
