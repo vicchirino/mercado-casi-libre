@@ -14,7 +14,7 @@ class ResultTableController: UITableViewController {
     
     private lazy var emptyStateView: UIView = {
         let view = UIView()
-        view.backgroundColor = .orange
+        view.backgroundColor = .lightGray
         return view
     }()
     
@@ -25,7 +25,7 @@ class ResultTableController: UITableViewController {
         label.font = .systemFont(ofSize: 18.0)
         return label
     }()
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -60,7 +60,6 @@ class ResultTableController: UITableViewController {
     private func setupViews() {
         tableView.register(ItemTableViewCell.self, forCellReuseIdentifier: ItemTableViewCell.identifier)
         tableView.separatorColor = .lightGray
-        
         emptyStateView.addSubview(emptyStateText)
     }
     

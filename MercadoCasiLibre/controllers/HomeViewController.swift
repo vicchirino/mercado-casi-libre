@@ -10,9 +10,14 @@ import SnapKit
 
 class HomeViewController: UIViewController {
     
-    private lazy var headerView: UIView = {
+    private lazy var searchHeaderView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemYellow
+        return view
+    }()
+    
+    private lazy var filtersHeaderView: FiltersHeaderView = {
+        let view = FiltersHeaderView()
         return view
     }()
     
@@ -22,7 +27,7 @@ class HomeViewController: UIViewController {
     }()
     
     private lazy var mainStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [headerView, resultTableViewController.view])
+        let stackView = UIStackView(arrangedSubviews: [searchHeaderView, filtersHeaderView, resultTableViewController.view])
         stackView.axis = .vertical
         return stackView
     }()
@@ -35,7 +40,9 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        resultTableViewController.setItems(items: Item.getMockItems())
+        let items = Item.getMockItems()
+        resultTableViewController.setItems(items: items)
+        filtersHeaderView.setResults(numberOfItems: items.count)
     }
     
     private func setupViews() {
@@ -49,15 +56,21 @@ class HomeViewController: UIViewController {
             make.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges)
         }
         
-        headerView.snp.makeConstraints { make in
+        searchHeaderView.snp.makeConstraints { make in
             make.top.equalTo(mainStackView.snp.top)
             make.leading.equalTo(mainStackView.snp.leading)
             make.trailing.equalTo(mainStackView.snp.trailing)
             make.height.equalTo(60)
         }
         
+        filtersHeaderView.snp.makeConstraints { make in
+            make.leading.equalTo(mainStackView.snp.leading)
+            make.trailing.equalTo(mainStackView.snp.trailing)
+            make.height.equalTo(45)
+        }
+        
         resultTableViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(headerView.snp.bottom)
+            make.top.equalTo(filtersHeaderView.snp.bottom)
             make.bottom.equalTo(mainStackView.snp.bottom)
             make.leading.equalTo(mainStackView.snp.leading)
             make.trailing.equalTo(mainStackView.snp.trailing)

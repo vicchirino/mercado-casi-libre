@@ -18,7 +18,7 @@ class ItemTableViewCell: UITableViewCell {
         label.textAlignment = .left
         label.textColor = .darkText
         label.numberOfLines = 3
-        label.font = .systemFont(ofSize: 18.0)
+        label.font = .systemFont(ofSize: 16.0)
         return label
     }()
 
@@ -26,7 +26,7 @@ class ItemTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .darkText
-        label.font = .systemFont(ofSize: 28.0)
+        label.font = .systemFont(ofSize: 26.0)
         return label
     }()
     
