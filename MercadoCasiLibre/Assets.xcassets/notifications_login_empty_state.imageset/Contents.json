@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "image-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "notifications_login_empty_state.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

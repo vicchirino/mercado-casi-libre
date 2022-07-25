@@ -24,7 +24,7 @@ class FiltersHeaderView: UIView {
         return label
     }()
     
-    private lazy var arrivesTodayLabel: UILabel = {
+    private lazy var deliveryDateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.text = "Llegan hoy"
@@ -32,33 +32,31 @@ class FiltersHeaderView: UIView {
         return label
     }()
     
-    private lazy var arrivesTodaySwitch: UISwitch = {
+    private lazy var deliveryDateSwitch: UISwitch = {
         let switchView = UISwitch()
         switchView.addTarget(self, action: #selector(arrivesTodaySwitchChanged), for: .valueChanged)
         return switchView
     }()
     
-    private lazy var arrivesTodayStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [arrivesTodayLabel, arrivesTodaySwitch])
+    private lazy var deliveryDateStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [deliveryDateLabel, deliveryDateSwitch])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 5
-//        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-//        stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     
     private lazy var filterLabel: UILabel = {
         let label = UILabel()
         label.text = "Filtrar"
-        label.textColor = .selectionColor
+        label.textColor = .blueColor
         label.font = .systemFont(ofSize: 14)
         return label
     }()
 
     private lazy var filterIcon: UIImageView = {
         let view = UIImageView()
-        view.setIcon(icon: .linearIcons(.chevronDown), textColor: .selectionColor, backgroundColor: .clear, size: CGSize(width: 18, height: 20))
+        view.setIcon(icon: .linearIcons(.chevronDown), textColor: .blueColor, backgroundColor: .clear, size: CGSize(width: 18, height: 20))
         return view
     }()
     
@@ -75,7 +73,7 @@ class FiltersHeaderView: UIView {
     }()
     
     private lazy var mainStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [resultsLabel, arrivesTodayStackView, filterButtonView])
+        let stackView = UIStackView(arrangedSubviews: [resultsLabel, deliveryDateStackView, filterButtonView])
         stackView.axis = .horizontal
         stackView.spacing = 10
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
@@ -108,7 +106,7 @@ class FiltersHeaderView: UIView {
         resultsLabel.snp.makeConstraints { make in
             make.width.greaterThanOrEqualTo(mainStackView.snp.width).multipliedBy(0.32)
         }
-        arrivesTodayStackView.snp.makeConstraints { make in
+        deliveryDateStackView.snp.makeConstraints { make in
             make.width.greaterThanOrEqualTo(mainStackView.snp.width).multipliedBy(0.26)
         }
         filterButtonView.snp.makeConstraints { make in
@@ -126,8 +124,8 @@ class FiltersHeaderView: UIView {
     }
     
     @objc func arrivesTodaySwitchChanged() {
-        print("Switch to \(arrivesTodaySwitch.isOn)")
-        delegate?.filtersHeaderViewArrivesTodayChanged(toValue: arrivesTodaySwitch.isOn)
+        print("Switch to \(deliveryDateSwitch.isOn)")
+        delegate?.filtersHeaderViewArrivesTodayChanged(toValue: deliveryDateSwitch.isOn)
     }
     
 }

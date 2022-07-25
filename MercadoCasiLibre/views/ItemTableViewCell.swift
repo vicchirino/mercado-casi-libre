@@ -16,7 +16,7 @@ class ItemTableViewCell: UITableViewCell {
     private lazy var title: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.textColor = .darkText
+        label.textColor = .darkTextColor
         label.numberOfLines = 3
         label.font = .systemFont(ofSize: 14.0)
         return label
@@ -25,7 +25,7 @@ class ItemTableViewCell: UITableViewCell {
     private lazy var price: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.textColor = .darkText
+        label.textColor = .darkTextColor
         label.font = .systemFont(ofSize: 22.0)
         return label
     }()

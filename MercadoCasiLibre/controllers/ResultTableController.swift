@@ -28,7 +28,7 @@ class ResultTableController: UITableViewController {
     
     private lazy var emptyStateText: UILabel = {
         let label = UILabel()
-        label.text = "Use the search bar to get results"
+        label.text = "Usa el buscador para obtener resultados"
         label.numberOfLines = 3
         label.font = .systemFont(ofSize: 18.0)
         return label
