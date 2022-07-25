@@ -8,13 +8,21 @@
 import UIKit
 import SnapKit
 
+protocol ResultTableControllerDelegate {
+    func resultTableControllerLoadMore()
+}
+
 class ResultTableController: UITableViewController {
     
     @Published private var items: [Item] = []
 
+    var delegate: ResultTableControllerDelegate?
+    
+    var totalResults: Int = 0
+    
     private lazy var emptyStateView: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .lightGrayColor
         return view
     }()
     
@@ -28,6 +36,8 @@ class ResultTableController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(ItemTableViewCell.self, forCellReuseIdentifier: ItemTableViewCell.identifier)
+        tableView.register(LoadMoreTableViewCell.self, forCellReuseIdentifier: LoadMoreTableViewCell.identifier)
         setupViews()
     }
     
@@ -36,35 +46,68 @@ class ResultTableController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if items.count == 0 {
+        var rows = items.count
+        if rows == 0 {
             setEmptyStateView()
         } else {
             removeEmptyStateView()
         }
-        return items.count
+        if rows < totalResults {
+            rows += 1 // Include load more results cell
+        }
+        return rows
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 170
+        if indexPath.row == items.count {
+            return 40
+        } else {
+            return 170
+        }
     }
             
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> ItemTableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ItemTableViewCell.identifier, for: indexPath) as? ItemTableViewCell else {
-            fatalError("Failed to get expected kind of reusable cell from the tableView. Expected type `ItemTableViewCell`")
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let row = indexPath.row
+        if row == items.count {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: LoadMoreTableViewCell.identifier, for: indexPath) as? LoadMoreTableViewCell else {
+                fatalError("Failed to get expected kind of reusable cell from the tableView. Expected type `LoadMoreTableViewCell`")
+            }
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ItemTableViewCell.identifier, for: indexPath) as? ItemTableViewCell else {
+                fatalError("Failed to get expected kind of reusable cell from the tableView. Expected type `ItemTableViewCell`")
+            }
+            cell.configureCell(item: items[row])
+            return cell
         }
-        
-        cell.configureCell(item: items[indexPath.row])
-        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let loadMoreTableViewCell = cell as? LoadMoreTableViewCell else {
+            return
+        }
+        loadMoreTableViewCell.startActivityIndicator()
+        delegate?.resultTableControllerLoadMore()
+    }
+    
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let loadMoreTableViewCell = cell as? LoadMoreTableViewCell else {
+            return
+        }
+        loadMoreTableViewCell.stopActivityIndicator()
     }
     
     private func setupViews() {
-        tableView.register(ItemTableViewCell.self, forCellReuseIdentifier: ItemTableViewCell.identifier)
-        tableView.separatorColor = .lightGray
+        tableView.separatorColor = .lightGrayColor
         emptyStateView.addSubview(emptyStateText)
     }
     
-    func setItems(items: [Item]) {
-        self.items = items
+    func setItems(items: [Item], forNewSearch: Bool = false) {
+        if forNewSearch {
+            self.items = items
+        } else {
+            self.items.append(contentsOf: items)
+        }
         tableView.reloadData()
     }
     

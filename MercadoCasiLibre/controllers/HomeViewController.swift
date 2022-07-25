@@ -12,19 +12,23 @@ import Combine
 class HomeViewController: UIViewController {
     
     private var cancellable: AnyCancellable?
+    private var currentSearch: Search = Search.placeHolder()
     
     private lazy var searchHeaderView: SearchHeaderView = {
         let view = SearchHeaderView()
+        view.delegate = self
         return view
     }()
     
     private lazy var filtersHeaderView: FiltersHeaderView = {
         let view = FiltersHeaderView()
+        view.delegate = self
         return view
     }()
     
     private lazy var resultTableViewController: ResultTableController = {
         let tableViewController = ResultTableController()
+        tableViewController.delegate = self
         return tableViewController
     }()
     
@@ -46,7 +50,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupViews() {
-        view.backgroundColor = .systemYellow
+        view.backgroundColor = .yellowColor
         self.addChild(resultTableViewController)
         view.addSubview(mainStackView)
         
@@ -77,14 +81,16 @@ class HomeViewController: UIViewController {
         }
     }
 
-    private func search() {
-        cancellable =  APIClient().getSearchWithCombine(q: "apple")
+    private func search(text: String = "", offset: Int = 0) {
+        cancellable =  APIClient().getSearchWithCombine(q: text, offset: offset)
             .receive(on: DispatchQueue.main)
             .sink {[weak self] result in
                 switch result {
                 case .success(let search):
-                    self?.resultTableViewController.setItems(items: search.results)
-                    self?.filtersHeaderView.setResults(numberOfItems: search.results.count)
+                    self?.resultTableViewController.totalResults = search.paging.total
+                    self?.resultTableViewController.setItems(items: search.results, forNewSearch: text != self?.currentSearch.query)
+                    self?.currentSearch = search
+                    self?.filtersHeaderView.setResults(numberOfItems: search.paging.total)
                 case .failure(let error):
                     fatalError("Error when searching \(error)")
                 }
@@ -92,4 +98,25 @@ class HomeViewController: UIViewController {
     }
     
 }
+
+extension HomeViewController: ResultTableControllerDelegate {
+    func resultTableControllerLoadMore() {
+        print("Load more results")
+        search(text: searchHeaderView.searchText, offset: (currentSearch.paging.limit + currentSearch.paging.offset))
+    }
+}
+
+extension HomeViewController: FiltersHeaderViewDelegate {
+    func filtersHeaderViewArrivesTodayChanged(toValue value: Bool) {
+        print("Delegate called")
+    }
+}
+
+extension HomeViewController: SearchHeaderViewDelegate {
+    func searchHeaderViewDidEndSearch(withText text: String) {
+        search(text: text, offset: 0)
+    }
+}
+
+
 

@@ -9,7 +9,6 @@ import Foundation
 import Alamofire
 import Combine
 
-
 protocol APICountriesProtocol: AnyObject {
     func getCountries(completion: @escaping (Result<[Country], AFError>) -> Void)
     func getCountriesWithCombine() -> AnyPublisher<Result<[Country], AFError>, Never>
@@ -21,12 +20,14 @@ protocol APISitesProtocol: AnyObject {
 }
 
 protocol APISearchProtocol: AnyObject {
-    func getSearch(completion: @escaping (Result<Search, AFError>) -> Void)
-    func getSearchWithCombine(q: String) -> AnyPublisher<Result<Search, AFError>, Never>
+    func getSearch(q: String, offset: Int, completion: @escaping (Result<Search, AFError>) -> Void)
+    func getSearchWithCombine(q: String, offset: Int) -> AnyPublisher<Result<Search, AFError>, Never>
 }
 
 
 public final class APIClient {
+    
+    var site: String = "MLA"
     
     @discardableResult
     private func performRequest<T: Decodable>(route: APIRouter, decoder: JSONDecoder = JSONDecoder(), completion: @escaping (Result<T, AFError>) -> Void) -> DataRequest {
@@ -57,6 +58,7 @@ extension APIClient: APICountriesProtocol {
 
 // MARK: - APISitesProtocol
 extension APIClient: APISitesProtocol {
+    
     func getSites(completion: @escaping (Result<[Site], AFError>) -> Void) {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -73,15 +75,15 @@ extension APIClient: APISitesProtocol {
 
 // MARK: - APISearchProtocol
 extension APIClient: APISearchProtocol {
-    func getSearch(completion: @escaping (Result<Search, AFError>) -> Void) {
+    func getSearch(q: String = "", offset: Int = 0, completion: @escaping (Result<Search, AFError>) -> Void) {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        performRequest(route: .getSearch(["q": "apple"]), decoder: jsonDecoder, completion: completion)
+        performRequest(route: .getSearch(["q" : q, "offset": "\(offset)"]), decoder: jsonDecoder, completion: completion)
     }
     
-    func getSearchWithCombine(q: String = "") -> AnyPublisher<Result<Search, AFError>, Never> {
+    func getSearchWithCombine(q: String = "", offset: Int = 0) -> AnyPublisher<Result<Search, AFError>, Never> {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        return performCombineRequest(route: .getSearch(["q" : q]), type: Search.self, decoder: jsonDecoder)
+        return performCombineRequest(route: .getSearch(["q" : q, "offset": "\(offset)"]), type: Search.self, decoder: jsonDecoder)
     }
 }

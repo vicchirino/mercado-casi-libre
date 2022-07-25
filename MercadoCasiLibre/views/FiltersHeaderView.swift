@@ -9,11 +9,18 @@ import UIKit
 import SnapKit
 import SwiftIcons
 
+protocol FiltersHeaderViewDelegate {
+    func filtersHeaderViewArrivesTodayChanged(toValue value: Bool)
+}
+
 class FiltersHeaderView: UIView {
+    
+    var delegate: FiltersHeaderViewDelegate?
     
     private lazy var resultsLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
+        label.textColor = .darkTextColor
         return label
     }()
     
@@ -21,11 +28,13 @@ class FiltersHeaderView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.text = "Llegan hoy"
+        label.textColor = .darkTextColor
         return label
     }()
     
     private lazy var arrivesTodaySwitch: UISwitch = {
         let switchView = UISwitch()
+        switchView.addTarget(self, action: #selector(arrivesTodaySwitchChanged), for: .valueChanged)
         return switchView
     }()
     
@@ -34,19 +43,22 @@ class FiltersHeaderView: UIView {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 5
+//        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+//        stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     
     private lazy var filterLabel: UILabel = {
         let label = UILabel()
         label.text = "Filtrar"
+        label.textColor = .selectionColor
         label.font = .systemFont(ofSize: 14)
         return label
     }()
 
     private lazy var filterIcon: UIImageView = {
         let view = UIImageView()
-        view.setIcon(icon: .linearIcons(.chevronDown), textColor: .systemBlue, backgroundColor: .clear, size: CGSize(width: 18, height: 20))
+        view.setIcon(icon: .linearIcons(.chevronDown), textColor: .selectionColor, backgroundColor: .clear, size: CGSize(width: 18, height: 20))
         return view
     }()
     
@@ -68,7 +80,7 @@ class FiltersHeaderView: UIView {
         stackView.spacing = 10
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.backgroundColor = .lightText
+        stackView.backgroundColor = .white
         return stackView
     }()
     
@@ -84,7 +96,7 @@ class FiltersHeaderView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        addBorder(side: .bottom, thickness: 1, color: .lightGray)
+        addBorder(side: .bottom, thickness: 1, color: .lightGrayColor)
     }
     
     private func layout() {
@@ -94,13 +106,13 @@ class FiltersHeaderView: UIView {
         }
         
         resultsLabel.snp.makeConstraints { make in
-            make.width.greaterThanOrEqualTo(mainStackView.snp.width).multipliedBy(0.35)
+            make.width.greaterThanOrEqualTo(mainStackView.snp.width).multipliedBy(0.32)
         }
         arrivesTodayStackView.snp.makeConstraints { make in
-            make.width.greaterThanOrEqualTo(mainStackView.snp.width).multipliedBy(0.28)
+            make.width.greaterThanOrEqualTo(mainStackView.snp.width).multipliedBy(0.26)
         }
         filterButtonView.snp.makeConstraints { make in
-            make.width.greaterThanOrEqualTo(mainStackView.snp.width).multipliedBy(0.20)
+            make.width.greaterThanOrEqualTo(mainStackView.snp.width).multipliedBy(0.22)
         }
         
     }
@@ -111,6 +123,11 @@ class FiltersHeaderView: UIView {
     
     @objc func filterButtonTapped() {
         print("Filter button tapped")
+    }
+    
+    @objc func arrivesTodaySwitchChanged() {
+        print("Switch to \(arrivesTodaySwitch.isOn)")
+        delegate?.filtersHeaderViewArrivesTodayChanged(toValue: arrivesTodaySwitch.isOn)
     }
     
 }

@@ -16,11 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if #available(iOS 15, *) {
             let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = .systemYellow
+            appearance.backgroundColor = .yellowColor
             barAppearance.standardAppearance = appearance
             barAppearance.scrollEdgeAppearance = appearance
         } else {
-            barAppearance.backgroundColor = .systemYellow
+            barAppearance.backgroundColor = .yellowColor
         }
         
         return true

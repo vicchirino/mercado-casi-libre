@@ -9,29 +9,41 @@ import UIKit
 import SnapKit
 import SwiftIcons
 
+protocol SearchHeaderViewDelegate {
+    func searchHeaderViewDidEndSearch(withText text: String)
+}
+
 class SearchHeaderView: UIView {
+    
+    var delegate: SearchHeaderViewDelegate?
+    var searchText: String {
+        get {
+            return searchBarView.text ?? ""
+        }
+    }
     
     private lazy var searchBarView: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Buscar en Mercado Casi Libre"
-        searchBar.backgroundColor = .systemYellow
+        searchBar.backgroundColor = .yellowColor
         searchBar.searchBarStyle = .minimal
         searchBar.showsCancelButton = false
         searchBar.delegate = self
-        searchBar.tintColor = .darkGray
+        searchBar.searchTextField.delegate = self
+        searchBar.tintColor = .darkTextColor
         return searchBar
     }()
     
     private lazy var cartButton: UIButton = {
         let button = UIButton()
-        button.setIcon(icon: .linearIcons(.cart), iconSize: 24, color: .darkGray, forState: .normal)
+        button.setIcon(icon: .linearIcons(.cart), iconSize: 24, color: .darkTextColor, forState: .normal)
         button.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.setIcon(icon: .linearIcons(.arrowLeft), iconSize: 24, color: .darkGray, forState: .normal)
+        button.setIcon(icon: .linearIcons(.arrowLeft), iconSize: 24, color: .darkTextColor, forState: .normal)
         button.alpha = 0
         button.isHidden = true
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
@@ -49,7 +61,7 @@ class SearchHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemYellow
+        backgroundColor = .yellowColor
         layout()
     }
     
@@ -97,8 +109,7 @@ class SearchHeaderView: UIView {
     }
 }
 
-extension SearchHeaderView: UISearchBarDelegate {
-    
+extension SearchHeaderView: UISearchBarDelegate, UITextFieldDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         hideCartButton()
         return true
@@ -109,12 +120,21 @@ extension SearchHeaderView: UISearchBarDelegate {
         return true
     }
     
-    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         searchBar.resignFirstResponder()
         displayCartButton()
     }
+        
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if let text = searchBar.text {
+            delegate?.searchHeaderViewDidEndSearch(withText: text)
+        }
+        displayCartButton()
+    }
     
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

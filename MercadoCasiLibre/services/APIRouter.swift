@@ -13,17 +13,13 @@ public protocol APIConfiguration: URLRequestConvertible {
     var baseURL: String { get }
     var path: String { get }
     var parameters: Parameters? { get }
-    
     func asURLRequest() throws -> URLRequest
 }
-
 
 public enum APIRouter: APIConfiguration {
     case getSites
     case getCountries
     case getSearch(_ parameters: [String: String])
-//    case getSuggests(_ parameters: [String: String])
-//    case getDrugs(_ parameters: [String: String])
     
     // MARK: - HTTPMethod
     public var method: HTTPMethod {
@@ -46,7 +42,7 @@ public enum APIRouter: APIConfiguration {
         case .getSites:
             return "/sites"
         case .getSearch:
-            return "/sites/MLA/search?q=apple"
+            return "/sites/\(APIClient().site)/search"
         }
     }
     
@@ -65,28 +61,22 @@ public enum APIRouter: APIConfiguration {
         let urlWithPathValue = baseURL + path
         var url: URL = try urlWithPathValue.asURL()
         var urlRequest = URLRequest(url: url)
-        urlRequest.setValue("Bearer \("$ACCESS_TOKEN")", forHTTPHeaderField: "Authentication"
-        )
+        urlRequest.setValue("Bearer \("$ACCESS_TOKEN")", forHTTPHeaderField: "Authentication")
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = method.rawValue
         
         if let parameters = parameters {
-            switch self {
-            case .getCountries, .getSites:
-                return urlRequest
-            case .getSearch:
-                guard var urlComponents = URLComponents(string: urlWithPathValue) else {
-                    fatalError("Couldn't get URLComponents")
-                }
-                
-                urlComponents.queryItems = []
-                _ = parameters.map { (key, value) in
-                let item = URLQueryItem(name: key, value: value as? String)
-                    urlComponents.queryItems?.append(item)
-                }
-                url = urlComponents.url ?? url
-                urlRequest.url = url
+            guard var urlComponents = URLComponents(string: urlWithPathValue) else {
+                fatalError("Couldn't get URLComponents")
             }
+                
+            urlComponents.queryItems = []
+            _ = parameters.map { (key, value) in
+                let item = URLQueryItem(name: key, value: value as? String)
+                urlComponents.queryItems?.append(item)
+            }
+            url = urlComponents.url ?? url
+            urlRequest.url = url
         }
 
         return urlRequest

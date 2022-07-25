@@ -18,7 +18,7 @@ class ItemTableViewCell: UITableViewCell {
         label.textAlignment = .left
         label.textColor = .darkText
         label.numberOfLines = 3
-        label.font = .systemFont(ofSize: 16.0)
+        label.font = .systemFont(ofSize: 14.0)
         return label
     }()
 
@@ -26,13 +26,13 @@ class ItemTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .darkText
-        label.font = .systemFont(ofSize: 26.0)
+        label.font = .systemFont(ofSize: 22.0)
         return label
     }()
     
     private lazy var itemImageViewContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .lightGrayColor
         view.layer.cornerRadius = 5
         return view
     }()
@@ -80,7 +80,7 @@ class ItemTableViewCell: UITableViewCell {
     
     private func layout() {
         backgroundColor = .white
-        addSubview(containerStackView)
+        contentView.addSubview(containerStackView)
         selectionStyle = .none
         
         preservesSuperviewLayoutMargins = false
@@ -112,7 +112,7 @@ class ItemTableViewCell: UITableViewCell {
     func configureCell(item: Item) {
         title.text = item.title
         title.sizeToFit()
-        price.text = "$\(item.price)"
+        price.text = NumberFormatter.localizedString(from: NSNumber(value: item.price), number: .currency)
         price.sizeToFit()
         itemImageView.sd_setImage(with: URL(string: item.thumbnail))
     }

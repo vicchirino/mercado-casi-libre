@@ -16,19 +16,6 @@ struct ItemTest: Decodable {
     var title: String
     var price: String
     var imageURL: String
-    
-    static func getMockItems() -> [ItemTest] {
-        guard let path = Bundle.main.url(forResource: "mockItems", withExtension:"plist") else {
-            fatalError("Can't find the json path")
-        }
-        do {
-            let data = try Data(contentsOf: path)
-            let items = try PropertyListDecoder().decode([ItemTest].self, from: data)
-            return items
-        } catch {
-            fatalError("Can't get data from file")
-        }
-    }
 }
 
 struct Item: Decodable {
