@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import Combine
+import AppAuth
 
 protocol APICountriesProtocol: AnyObject {
     func getCountries(completion: @escaping (Result<[Country], AFError>) -> Void)
@@ -28,7 +29,8 @@ protocol APISearchProtocol: AnyObject {
 public final class APIClient {
     
     var site: String = "MLA"
-    
+    private var authState: OIDAuthState?
+
     @discardableResult
     private func performRequest<T: Decodable>(route: APIRouter, decoder: JSONDecoder = JSONDecoder(), completion: @escaping (Result<T, AFError>) -> Void) -> DataRequest {
         return AF.request(route).responseDecodable(of: T.self, decoder: decoder) { response in

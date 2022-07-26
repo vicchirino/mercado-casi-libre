@@ -10,6 +10,7 @@ target 'MercadoCasiLibre' do
   pod 'SDWebImage', '~> 5.0'
   pod 'SwiftIcons', '~> 2.3.2'
   pod 'Alamofire'
+  pod 'AppAuth'
   
   target 'MercadoCasiLibreTests' do
     inherit! :search_paths
