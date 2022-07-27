@@ -12,7 +12,8 @@ import Combine
 class HomeViewController: UIViewController {
     
     private var cancellable: AnyCancellable?
-    private var currentSearch: Search = Search.placeHolder()
+
+    private var currentSearch: Search!
     
     private lazy var searchHeaderView: SearchHeaderView = {
         let view = SearchHeaderView()
@@ -40,7 +41,6 @@ class HomeViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         setupViews()
         search()
     }
@@ -82,26 +82,21 @@ class HomeViewController: UIViewController {
     }
 
     private func search(text: String = "", offset: Int = 0) {
-        cancellable =  APIClient().getSearchWithCombine(q: text, offset: offset)
-            .receive(on: DispatchQueue.main)
-            .sink {[weak self] result in
-                switch result {
-                case .success(let search):
-                    self?.resultTableViewController.totalResults = search.paging.total
-                    self?.resultTableViewController.setItems(items: search.results, forNewSearch: text != self?.currentSearch.query)
-                    self?.currentSearch = search
-                    self?.filtersHeaderView.setResults(numberOfItems: search.paging.total)
-                case .failure(let error):
-                    fatalError("Error when searching \(error)")
-                }
-            }
+        cancellable = WebService().search(q: text, offset: offset)
+            .sink {error in
+            print(error)
+        } receiveValue: {[weak self] search in
+            self?.currentSearch = search
+            self?.resultTableViewController.totalResults = search.paging.total
+            self?.resultTableViewController.setItems(items: search.results, forNewSearch: text != self?.currentSearch.query)
+            self?.filtersHeaderView.setResults(numberOfItems: search.paging.total)
+        }
     }
     
 }
 
 extension HomeViewController: ResultTableControllerDelegate {
     func resultTableControllerLoadMore() {
-        print("Load more results")
         search(text: searchHeaderView.searchText, offset: (currentSearch.paging.limit + currentSearch.paging.offset))
     }
 }

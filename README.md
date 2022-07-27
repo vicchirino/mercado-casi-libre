@@ -5,7 +5,6 @@ Una copia de la aplicacion iOS de Mercado Libre, utilizando la API que ellos pro
 https://user-images.githubusercontent.com/3228237/180879851-9fb62ee9-3b2a-433f-b30b-1aa69d700efe.mov
 
 ### Libraries
-- Alamofire: https://github.com/Alamofire/Alamofire
 - SwiftIcons: https://github.com/ranesr/SwiftIcons
 - SnapKit: https://github.com/SnapKit/SnapKit
 - SDWebImage: https://github.com/SDWebImage/SDWebImage
