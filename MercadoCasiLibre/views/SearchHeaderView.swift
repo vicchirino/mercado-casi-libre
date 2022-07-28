@@ -11,6 +11,7 @@ import SwiftIcons
 
 protocol SearchHeaderViewDelegate {
     func searchHeaderViewDidEndSearch(withText text: String)
+    func searchHeaderViewBackButtonTapped()
 }
 
 class SearchHeaderView: UIView {
@@ -41,6 +42,14 @@ class SearchHeaderView: UIView {
         return button
     }()
     
+    private lazy var magnifierButton: UIButton = {
+        let button = UIButton()
+        button.isHidden = true
+        button.setIcon(icon: .linearIcons(.magnifier), iconSize: 24, color: .darkTextColor, forState: .normal)
+        button.addTarget(self, action: #selector(magnifierButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setIcon(icon: .linearIcons(.arrowLeft), iconSize: 24, color: .darkTextColor, forState: .normal)
@@ -51,7 +60,7 @@ class SearchHeaderView: UIView {
     }()
     
     private lazy var mainStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [backButton ,searchBarView, cartButton])
+        let stackView = UIStackView(arrangedSubviews: [backButton ,searchBarView, magnifierButton, cartButton])
         stackView.axis = .horizontal
         stackView.spacing = 10
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 20)
@@ -76,14 +85,29 @@ class SearchHeaderView: UIView {
         }
     }
     
+    private func clearSearch() {
+        searchBarView.text = nil
+        searchBarView.resignFirstResponder()
+        UIView.animate(withDuration: 0.0, delay: 0, options: UIView.AnimationOptions.curveLinear, animations: {
+            self.magnifierButton.isHidden = false
+            self.searchBarView.alpha = 0
+        }, completion: nil)
+
+    }
+    
     func displayBackButton() {
         backButton.isHidden = false
         backButton.alpha = 1
+        clearSearch()
     }
     
     func hideBackButton() {
         backButton.isHidden = true
         backButton.alpha = 0
+        UIView.animate(withDuration: 0.0, delay: 0, options: UIView.AnimationOptions.curveLinear, animations: {
+            self.magnifierButton.isHidden = true
+            self.searchBarView.alpha = 1
+        }, completion: nil)
     }
     
     func displayCartButton() {
@@ -97,15 +121,18 @@ class SearchHeaderView: UIView {
         cartButton.alpha = 0
         searchBarView.showsCancelButton = true
     }
-    
+        
     @objc private func cartButtonTapped() {
         print("Cart button tapped")
-        displayBackButton()
+    }
+    
+    @objc private func magnifierButtonTapped() {
+        print("Magnifier button tapped")
     }
     
     @objc private func backButtonTapped() {
-        print("Back button tapped")
         hideBackButton()
+        delegate?.searchHeaderViewBackButtonTapped()
     }
 }
 

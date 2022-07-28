@@ -34,6 +34,7 @@ class FiltersHeaderView: UIView {
     
     private lazy var deliveryDateSwitch: UISwitch = {
         let switchView = UISwitch()
+        switchView.isEnabled = false
         switchView.addTarget(self, action: #selector(arrivesTodaySwitchChanged), for: .valueChanged)
         return switchView
     }()
@@ -43,6 +44,7 @@ class FiltersHeaderView: UIView {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 5
+        stackView.layer.opacity = 0.75
         return stackView
     }()
     
@@ -65,6 +67,7 @@ class FiltersHeaderView: UIView {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 5
+        stackView.layer.opacity = 0.75
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         stackView.isLayoutMarginsRelativeArrangement = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(filterButtonTapped))

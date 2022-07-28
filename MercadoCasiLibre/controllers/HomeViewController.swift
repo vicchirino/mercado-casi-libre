@@ -31,8 +31,13 @@ class HomeViewController: UIViewController {
         return tableViewController
     }()
     
+    private lazy var resultNavigationController: UINavigationController = {
+        let navigationController = UINavigationController(rootViewController: resultTableViewController)
+        return navigationController
+    }()
+
     private lazy var mainStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [searchHeaderView, filtersHeaderView, resultTableViewController.view])
+        let stackView = UIStackView(arrangedSubviews: [searchHeaderView, filtersHeaderView, resultNavigationController.view])
         stackView.axis = .vertical
         return stackView
     }()
@@ -49,11 +54,11 @@ class HomeViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .yellowColor
-        self.addChild(resultTableViewController)
+        self.addChild(resultNavigationController)
         view.addSubview(mainStackView)
         
-        resultTableViewController.didMove(toParent: self)
-        
+        resultNavigationController.didMove(toParent: self)
+                
         mainStackView.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide.snp.edges)
         }
@@ -71,7 +76,7 @@ class HomeViewController: UIViewController {
             make.height.equalTo(45)
         }
         
-        resultTableViewController.view.snp.makeConstraints { make in
+        resultNavigationController.view.snp.makeConstraints { make in
             make.top.equalTo(filtersHeaderView.snp.bottom)
             make.bottom.equalTo(mainStackView.snp.bottom)
             make.leading.equalTo(mainStackView.snp.leading)
@@ -85,12 +90,12 @@ class HomeViewController: UIViewController {
                 print("Handle Error in UX")
                 return
             }
-            self?.currentSearch = search
             self?.resultTableViewController.totalResults = search.paging.total
             self?.resultTableViewController.setItems(
                 items: search.results,
-                forNewSearch: text != self?.currentSearch.query)
+                forNewSearch: text != self?.currentSearch?.query ?? "")
             self?.filtersHeaderView.setResults(numberOfItems: search.paging.total)
+            self?.currentSearch = search
         }
     }
     
@@ -99,6 +104,10 @@ class HomeViewController: UIViewController {
 extension HomeViewController: ResultTableControllerDelegate {
     func resultTableControllerLoadMore() {
         search(text: searchHeaderView.searchText, offset: (currentSearch.paging.limit + currentSearch.paging.offset))
+    }
+    
+    func resultTableControllerItemDidSelected(item: Item) {
+        searchHeaderView.displayBackButton()
     }
 }
 
@@ -111,6 +120,10 @@ extension HomeViewController: FiltersHeaderViewDelegate {
 extension HomeViewController: SearchHeaderViewDelegate {
     func searchHeaderViewDidEndSearch(withText text: String) {
         search(text: text, offset: 0)
+    }
+    
+    func searchHeaderViewBackButtonTapped() {
+        resultNavigationController.popToRootViewController(animated: true)
     }
 }
 

@@ -10,14 +10,13 @@ import SnapKit
 
 protocol ResultTableControllerDelegate {
     func resultTableControllerLoadMore()
+    func resultTableControllerItemDidSelected(item: Item)
 }
 
 class ResultTableController: UITableViewController {
     
     @Published private var items: [Item] = []
-
     var delegate: ResultTableControllerDelegate?
-    
     var totalResults: Int = 0
     
     private lazy var emptyStateView: UIView = {
@@ -41,6 +40,41 @@ class ResultTableController: UITableViewController {
         setupViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    private func setupViews() {
+        tableView.separatorColor = .lightGrayColor
+        emptyStateView.addSubview(emptyStateText)
+    }
+    
+    func setItems(items: [Item], forNewSearch: Bool = false) {
+        if forNewSearch {
+            self.items = items
+        } else {
+            self.items.append(contentsOf: items)
+        }
+        tableView.reloadData()
+    }
+    
+    private func setEmptyStateView() {
+        tableView.backgroundView = emptyStateView
+        
+        emptyStateText.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+    }
+    
+    private func removeEmptyStateView() {
+        tableView.backgroundView = nil
+    }
+    
+}
+// MARK: - UITableViewDelegate, UITableViewDataSource
+extension ResultTableController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -97,36 +131,19 @@ class ResultTableController: UITableViewController {
         loadMoreTableViewCell.stopActivityIndicator()
     }
     
-    private func setupViews() {
-        tableView.separatorColor = .lightGrayColor
-        emptyStateView.addSubview(emptyStateText)
-    }
-    
-    func setItems(items: [Item], forNewSearch: Bool = false) {
-        if forNewSearch {
-            self.items = items
-        } else {
-            self.items.append(contentsOf: items)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let row = indexPath.row
+        if row == items.count {
+            // The LoadMoreTableViewCell was pressed. Do nothing.
+            return
         }
-        tableView.reloadData()
+        let item = items[row]
+        let itemDetailViewController = ItemDetailViewController(item: item)
+        
+        delegate?.resultTableControllerItemDidSelected(item: item)
+        navigationController?.pushViewController(itemDetailViewController, animated: true)
     }
-    
 }
 
-extension ResultTableController {
-    
-    func setEmptyStateView() {
-        tableView.backgroundView = emptyStateView
-        
-        emptyStateText.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-        }
-    }
-    
-    func removeEmptyStateView() {
-        tableView.backgroundView = nil
-    }
-}
 
 

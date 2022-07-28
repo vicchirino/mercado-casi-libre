@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+/// Custom colors
 public extension UIColor {
     static let yellowColor = UIColor(red: 248/255, green: 222/255, blue: 70/255, alpha: 1)
     static let lightGrayColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
