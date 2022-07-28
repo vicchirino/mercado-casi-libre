@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SearchAPI {
-    func search(q: String, offset: Int, completion: @escaping (Search) -> Void)
+    func search(q: String, offset: Int, completion: @escaping (Search, NetworkingError?) -> Void)
 }
 
 struct SearchRequest: Request {

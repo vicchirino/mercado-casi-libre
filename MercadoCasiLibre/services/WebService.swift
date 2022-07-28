@@ -30,12 +30,12 @@ public final class WebService {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
     }
     
-    private func configure(_ parameters: [String: Any]?) {
+    private func configure(_ parameters: [String: Any]?) throws {
         guard let parameters = parameters else {
             return
         }
         guard let url = urlRequest.url?.absoluteString, var urlComponents = URLComponents(string: url) else {
-            fatalError("Couldn't get URLComponents")
+            throw NetworkingError.invalidURL
         }
         urlComponents.queryItems = []
         _ = parameters.map { (key, value) in
@@ -45,51 +45,62 @@ public final class WebService {
         urlRequest.url =  urlComponents.url
     }
     
-    private func fetch<T: Request>(request: T, completion: @escaping (T.ModelType) -> Void) {
+    private func fetch<T: Request>(request: T, completion: @escaping (T.ModelType?, NetworkingError?) -> Void) {
+        guard let url = URL(string: baseURL + request.path) else {
+            DispatchQueue.main.async {
+                completion(nil, NetworkingError.invalidURL)
+            }
+            return
+        }
              
-        let url = URL(string: baseURL + request.path)!
-        
         urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.httpMethod.rawValue
         
         configureHeaders()
-        configure(request.parameters)
+        
+        do {
+            try configure(request.parameters)
+        } catch {
+            DispatchQueue.main.async {
+                completion(nil, NetworkingError.invalidURL)
+            }
+        }
         
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if error != nil {
-                print("Handle error")
+                DispatchQueue.main.async {
+                    completion(nil, NetworkingError.fetchingError)
+                }
             }
             
             // Check response status code to handle other errors
             
-            let jsonDecoder = JSONDecoder()
-            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            
             guard let data = data else {
-                print("Handle other error")
+                DispatchQueue.main.async {
+                    completion(nil, NetworkingError.dataCorrupted)
+                }
                 return
             }
-            
             DispatchQueue.main.async {
-                completion(request.decode(data: data))
+                completion(request.decode(data: data), nil)
             }
-            
-            
         }.resume()
     }
 }
 
 // MARK: - SearchAPI
 extension WebService: SearchAPI {
-    func search(q: String = "", offset: Int = 0, completion: @escaping (Search) -> Void) {
+    func search(q: String = "", offset: Int = 0, completion: @escaping (Search, NetworkingError?) -> Void) {
         let searchRequest = SearchRequest(parameters: ["q": q, "offset": offset])
-        fetch(request: searchRequest, completion: completion)
+        fetch(request: searchRequest) { result, error in
+            completion(result ?? Search.placeHolder(), error)
+        }
     }
 }
 
 // MARK: - CountriesAPI
 extension WebService: CountriesAPI {
-    func getCountries(completion: @escaping (([Country]) -> Void)) {
+    func getCountries(completion: @escaping (([Country]?, NetworkingError?) -> Void)) {
         let countriesRequest = CountriesRequest()
         fetch(request: countriesRequest, completion: completion)
     }

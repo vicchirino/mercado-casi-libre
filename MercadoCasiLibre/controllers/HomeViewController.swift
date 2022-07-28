@@ -80,7 +80,11 @@ class HomeViewController: UIViewController {
     }
 
     private func search(text: String = "", offset: Int = 0) {
-        WebService().search(q: text, offset: offset) {[weak self] search in
+        WebService().search(q: text, offset: offset) {[weak self] search, error in
+            if error != nil {
+                print("Handle Error in UX")
+                return
+            }
             self?.currentSearch = search
             self?.resultTableViewController.totalResults = search.paging.total
             self?.resultTableViewController.setItems(

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CountriesAPI {
-    func getCountries(completion: @escaping (([Country]) -> Void))
+    func getCountries(completion: @escaping (([Country]?, NetworkingError?) -> Void))
 }
 
 struct CountriesRequest: Request {
