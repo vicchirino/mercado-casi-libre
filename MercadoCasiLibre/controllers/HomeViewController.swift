@@ -108,6 +108,16 @@ extension HomeViewController: ResultTableControllerDelegate {
     
     func resultTableControllerItemDidSelected(item: Item) {
         searchHeaderView.displayBackButton()
+        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseInOut, animations: {
+            self.filtersHeaderView.snp.remakeConstraints { [weak self] make in
+                make.leading.equalTo(self?.mainStackView.snp.leading ?? 0)
+                make.trailing.equalTo(self?.mainStackView.snp.trailing ?? 0)
+                make.height.equalTo(0)
+            }
+            self.mainStackView.layoutIfNeeded()
+        }, completion: { _ in
+            self.filtersHeaderView.isHidden = true
+        })
     }
 }
 
@@ -124,6 +134,15 @@ extension HomeViewController: SearchHeaderViewDelegate {
     
     func searchHeaderViewBackButtonTapped() {
         resultNavigationController.popToRootViewController(animated: true)
+        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseInOut, animations: {
+            self.filtersHeaderView.isHidden = false
+            self.filtersHeaderView.snp.remakeConstraints { [weak self] make in
+                make.leading.equalTo(self?.mainStackView.snp.leading ?? 0)
+                make.trailing.equalTo(self?.mainStackView.snp.trailing ?? 0)
+                make.height.equalTo(45)
+            }
+            self.mainStackView.layoutIfNeeded()
+        }, completion: nil)
     }
 }
 
