@@ -9,15 +9,18 @@ import XCTest
 
 class CountriesAPITests: XCTestCase {
     
+    var webService: WebService!
     var countriesRequest: CountriesRequest!
     var countries: [Country]?
     var customError: CustomError?
     
     override func setUpWithError() throws {
+        webService = WebService()
         countriesRequest = CountriesRequest()
     }
 
     override func tearDownWithError() throws {
+        webService = nil
         countriesRequest = nil
         countries = nil
         customError = nil
@@ -64,6 +67,21 @@ class CountriesAPITests: XCTestCase {
     func testCountriesRequest() throws {
         XCTAssertEqual(countriesRequest.path, "/classified_locations/countries")
         XCTAssertEqual(countriesRequest.httpMethod.rawValue, "GET")
+    }
+    
+    func testCountriesAPIgetCountries() throws {
+        let expectation = self.expectation(description: "Fetch countries API")
+        
+        webService.getCountries { [weak self] countriesResult, customErrorResult in
+            self?.countries = countriesResult
+            self?.customError = customErrorResult
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 10)
+        XCTAssertNil(customError)
+        let countriesCount = try XCTUnwrap(countries?.count)
+        XCTAssertGreaterThan(countriesCount, 0)
     }
 
 }

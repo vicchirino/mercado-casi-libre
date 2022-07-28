@@ -23,7 +23,7 @@ enum HTTPMethod: String {
 public final class WebService {
     
     private var baseURL = "https://api.mercadolibre.com"
-    var urlRequest: URLRequest!
+    private var urlRequest: URLRequest!
 
     private func configureHeaders() {
         urlRequest.setValue("Bearer \("$ACCESS_TOKEN")", forHTTPHeaderField: "Authentication")
@@ -73,7 +73,7 @@ public final class WebService {
                 }
             }
             
-            // Check response status code to handle other errors
+            // TODO: Check response status code to handle other errors
             
             guard let data = data else {
                 DispatchQueue.main.async {
@@ -81,9 +81,9 @@ public final class WebService {
                 }
                 return
             }
-            request.decode(data: data) { decodedData, error in
+            request.decode(data: data) { decodedData, decodeError in
                 DispatchQueue.main.async {
-                    completion(decodedData, error)
+                    completion(decodedData, decodeError)
                 }
             }
         }.resume()
@@ -107,6 +107,15 @@ extension WebService: CountriesAPI {
         fetch(request: countriesRequest, completion: completion)
     }
 }
+
+// MARK: - ItemsAPI
+extension WebService: ItemsAPI {
+    func getItems(ids: [String], completion: @escaping ([Item]?, CustomError?) -> Void) {
+        let itemsRequest = ItemsRequest(parameters: ["ids": ids.joined(separator: ",")])
+        fetch(request: itemsRequest, completion: completion)
+    }
+}
+
 
 
 
