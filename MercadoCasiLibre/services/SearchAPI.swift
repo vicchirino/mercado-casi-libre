@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SearchAPI {
-    func search(q: String, offset: Int, completion: @escaping (Search, NetworkingError?) -> Void)
+    func search(q: String, offset: Int, completion: @escaping (Search, CustomError?) -> Void)
 }
 
 struct SearchRequest: Request {
@@ -18,16 +18,15 @@ struct SearchRequest: Request {
     var httpMethod = HTTPMethod.get
     var parameters: [String : Any]?
     
-    func decode(data: Data) -> Search {
+    func decode(data: Data, completion: (Search?, CustomError?) -> Void) {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         
         do {
             let search = try jsonDecoder.decode(Search.self, from: data)
-            return search
+            completion(search, nil)
         } catch {
-            print("Handle decoding error")
-            return Search.placeHolder()
+            completion(nil, .decodingError)
         }
     }
         

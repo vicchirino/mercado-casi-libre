@@ -13,7 +13,7 @@ protocol Request {
     var httpMethod: HTTPMethod { get set }
     var parameters: [String : Any]? { get set}
     
-    func decode(data: Data) -> ModelType
+    func decode(data: Data, completion: @escaping (ModelType?, CustomError?) -> Void)
 }
 
 enum HTTPMethod: String {
@@ -35,7 +35,7 @@ public final class WebService {
             return
         }
         guard let url = urlRequest.url?.absoluteString, var urlComponents = URLComponents(string: url) else {
-            throw NetworkingError.invalidURL
+            throw CustomError.invalidURL
         }
         urlComponents.queryItems = []
         _ = parameters.map { (key, value) in
@@ -45,10 +45,10 @@ public final class WebService {
         urlRequest.url =  urlComponents.url
     }
     
-    private func fetch<T: Request>(request: T, completion: @escaping (T.ModelType?, NetworkingError?) -> Void) {
+    private func fetch<T: Request>(request: T, completion: @escaping (T.ModelType?, CustomError?) -> Void) {
         guard let url = URL(string: baseURL + request.path) else {
             DispatchQueue.main.async {
-                completion(nil, NetworkingError.invalidURL)
+                completion(nil, CustomError.invalidURL)
             }
             return
         }
@@ -62,14 +62,14 @@ public final class WebService {
             try configure(request.parameters)
         } catch {
             DispatchQueue.main.async {
-                completion(nil, NetworkingError.invalidURL)
+                completion(nil, CustomError.invalidURL)
             }
         }
         
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(nil, NetworkingError.fetchingError)
+                    completion(nil, CustomError.fetchingError)
                 }
             }
             
@@ -77,12 +77,14 @@ public final class WebService {
             
             guard let data = data else {
                 DispatchQueue.main.async {
-                    completion(nil, NetworkingError.dataCorrupted)
+                    completion(nil, CustomError.dataCorrupted)
                 }
                 return
             }
-            DispatchQueue.main.async {
-                completion(request.decode(data: data), nil)
+            request.decode(data: data) { decodedData, error in
+                DispatchQueue.main.async {
+                    completion(decodedData, error)
+                }
             }
         }.resume()
     }
@@ -90,7 +92,7 @@ public final class WebService {
 
 // MARK: - SearchAPI
 extension WebService: SearchAPI {
-    func search(q: String = "", offset: Int = 0, completion: @escaping (Search, NetworkingError?) -> Void) {
+    func search(q: String = "", offset: Int = 0, completion: @escaping (Search, CustomError?) -> Void) {
         let searchRequest = SearchRequest(parameters: ["q": q, "offset": offset])
         fetch(request: searchRequest) { result, error in
             completion(result ?? Search.placeHolder(), error)
@@ -100,7 +102,7 @@ extension WebService: SearchAPI {
 
 // MARK: - CountriesAPI
 extension WebService: CountriesAPI {
-    func getCountries(completion: @escaping (([Country]?, NetworkingError?) -> Void)) {
+    func getCountries(completion: @escaping (([Country]?, CustomError?) -> Void)) {
         let countriesRequest = CountriesRequest()
         fetch(request: countriesRequest, completion: completion)
     }

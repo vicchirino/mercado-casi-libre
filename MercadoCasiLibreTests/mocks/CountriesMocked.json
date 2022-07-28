@@ -1,0 +1,20 @@
+[
+  {
+    "id": "AR",
+    "name": "Argentina",
+    "locale": "es_AR",
+    "currency_id": "ARS"
+  },
+  {
+    "id": "BO",
+    "name": "Bolivia",
+    "locale": "es_BO",
+    "currency_id": "BOB"
+  },
+  {
+    "id": "BR",
+    "name": "Brasil",
+    "locale": "pt_BR",
+    "currency_id": "BRL"
+  }
+]
