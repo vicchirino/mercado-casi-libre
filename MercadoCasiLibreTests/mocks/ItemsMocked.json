@@ -1,0 +1,58 @@
+[
+  {
+    "code": 200,
+    "body": {
+      "id": "1",
+      "site_id": "MLA",
+      "title": "The Secret of Monkey Island",
+      "price": 1200,
+      "currency_id": "ARS",
+      "thumbnail": "",
+      "available_quantity": 50,
+      "sold_quantity": 2,
+      "condition": "Nuevo",
+      "pictures": [
+        {
+          "id": "785668-MLA42658920001_072020",
+          "url": "https://item-1-picture-1",
+          "size": "500x250",
+          "max_size": "1200x600"
+        },
+        {
+          "id": "941305-MLA42659282519_072020",
+          "url": "https://item-1-picture-2",
+          "size": "500x250",
+          "max_size": "1200x600"
+        }
+      ]
+    }
+  },
+  {
+    "code": 200,
+    "body": {
+      "id": "2",
+      "site_id": "MLA",
+      "title": "Lechuck's Revenge",
+      "price": 1100,
+      "currency_id": "ARS",
+      "thumbnail": "",
+      "available_quantity": 100,
+      "sold_quantity": 30,
+      "condition": "Nuevo",
+      "pictures": [
+        {
+          "id": "785668-MLA42658920001_072020",
+          "url": "https://item-2-picture-1",
+          "size": "500x250",
+          "max_size": "1200x600"
+        },
+        {
+          "id": "941305-MLA42659282519_072020",
+          "url": "https://item-2-picture-2",
+          "size": "500x250",
+          "max_size": "1200x600"
+        }
+      ]
+    }
+  }
+]

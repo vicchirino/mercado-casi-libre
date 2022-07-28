@@ -1,0 +1,36 @@
+{
+  "site_id": "MLA",
+  "country_default_time_zone": "GMT-03:00",
+  "query": "Monkey Island",
+  "results": [
+    {
+      "id": "1",
+      "site_id": "MLA",
+      "title": "The Secret of Monkey Island",
+      "price": 1200,
+      "currency_id": "ARS",
+      "thumbnail": ""
+    },
+    {
+      "id": "2",
+      "site_id": "MLA",
+      "title": "Lechuck's Revenge",
+      "price": 1100,
+      "currency_id": "ARS",
+      "thumbnail": ""
+    },
+    {
+      "id": "3",
+      "site_id": "MLA",
+      "title": "The Curse of Monkey Island",
+      "price": 1150,
+      "currency_id": "ARS",
+      "thumbnail": ""
+    }
+  ],
+  "paging": {
+    "total": 3,
+    "offset": 0,
+    "limit": 50
+  }
+}

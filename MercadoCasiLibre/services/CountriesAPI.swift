@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CountriesAPI {
-    func getCountries(completion: @escaping (([Country]?, NetworkingError?) -> Void))
+    func getCountries(completion: @escaping (([Country]?, CustomError?) -> Void))
 }
 
 struct CountriesRequest: Request {
@@ -18,16 +18,15 @@ struct CountriesRequest: Request {
     var httpMethod = HTTPMethod.get
     var parameters: [String : Any]?
     
-    func decode(data: Data) -> [Country] {
+    func decode(data: Data, completion: ([Country]?, CustomError?) -> Void) {
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         
         do {
             let countries = try jsonDecoder.decode([Country].self, from: data)
-            return countries
+            completion(countries, nil)
         } catch {
-            print("Handle decoding error")
-            return []
+            completion(nil, CustomError.decodingError)
         }
     }
 }

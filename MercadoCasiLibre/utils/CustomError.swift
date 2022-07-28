@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum NetworkingError: Error {
+enum CustomError: Error {
     /// Throw when an expected resource is not found
     case notFound
     /// Throw when couldn't build URL
@@ -22,14 +22,14 @@ enum NetworkingError: Error {
     case unexpected(code: Int)
 }
 
-extension NetworkingError {
+extension CustomError {
     var isFatal: Bool {
         if case .unexpected = self { return true }
         return false
     }
 }
 
-extension NetworkingError: CustomStringConvertible {
+extension CustomError: CustomStringConvertible {
     public var description: String {
         switch self {
         case .notFound:
@@ -48,7 +48,7 @@ extension NetworkingError: CustomStringConvertible {
     }
 }
 
-extension NetworkingError: LocalizedError {
+extension CustomError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .notFound:
