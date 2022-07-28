@@ -1,35 +1,28 @@
 //
-//  WebService.swift
+//  WebService2.swift
 //  MercadoCasiLibre
 //
 //  Created by Victor Chirino on 27/07/2022.
 //
 
 import Foundation
-import Combine
 
-protocol WebServiceCountriesProtocol {
-    func getCountries() -> AnyPublisher<[Country], Error>
-}
-
-protocol WebServiceSitesProtocol {
-    func getSites() -> AnyPublisher<[Site], Error>
-}
-
-
-protocol WebServiceSearchProtocol {
-    func search(q: String, offset: Int) -> AnyPublisher<Search, Error>
+protocol Request {
+    associatedtype ModelType: Decodable
+    var path: String { get set }
+    var httpMethod: HTTPMethod { get set }
+    var parameters: [String : Any]? { get set}
+    
+    func decode(data: Data) -> ModelType
 }
 
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
 }
-
 public final class WebService {
     
-    var baseURL = "https://api.mercadolibre.com"
-    var site = "MLA"
+    private var baseURL = "https://api.mercadolibre.com"
     var urlRequest: URLRequest!
 
     private func configureHeaders() {
@@ -37,7 +30,10 @@ public final class WebService {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
     }
     
-    private func configure(_ parameters: [String: Any]) {
+    private func configure(_ parameters: [String: Any]?) {
+        guard let parameters = parameters else {
+            return
+        }
         guard let url = urlRequest.url?.absoluteString, var urlComponents = URLComponents(string: url) else {
             fatalError("Couldn't get URLComponents")
         }
@@ -49,56 +45,57 @@ public final class WebService {
         urlRequest.url =  urlComponents.url
     }
     
-    private func request<T: Decodable>(withPath path: String = "",
-                                       httpMethod: HTTPMethod,
-                                       andParameters parameters: [String: Any] = [:]) -> AnyPublisher<T, Error> {
-        guard let url = URL(string: baseURL + path) else {
-            fatalError("Cannot form URL")
-        }
+    private func fetch<T: Request>(request: T, completion: @escaping (T.ModelType) -> Void) {
+             
+        let url = URL(string: baseURL + request.path)!
         
         urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = request.httpMethod.rawValue
         
         configureHeaders()
-        configure(parameters)
+        configure(request.parameters)
         
-        urlRequest.httpMethod = httpMethod.rawValue
-                
-        let jsonDecoder = JSONDecoder()
-        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        return URLSession.shared.dataTaskPublisher(for: urlRequest)
-            .receive(on: RunLoop.main)
-            .mapError({ error in
-                fatalError("Error when fetching")
-            })
-            .map {  $0.data }
-            .decode(type: T.self, decoder: jsonDecoder)
-            .eraseToAnyPublisher()
-    }
-    
-}
-
-// MARK: - WebServiceSearchProtocol
-extension WebService: WebServiceSearchProtocol {
-    func search(q: String, offset: Int) -> AnyPublisher<Search, Error> {
-        return request(
-            withPath: "/sites/\(site)/search",
-            httpMethod: .get,
-            andParameters: ["q": q, "offset": offset]) as AnyPublisher<Search, Error>
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            if error != nil {
+                print("Handle error")
+            }
+            
+            // Check response status code to handle other errors
+            
+            let jsonDecoder = JSONDecoder()
+            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+            
+            guard let data = data else {
+                print("Handle other error")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                completion(request.decode(data: data))
+            }
+            
+            
+        }.resume()
     }
 }
 
-// MARK: - WebServiceCountriesProtocol
-extension WebService: WebServiceCountriesProtocol {
-    func getCountries() -> AnyPublisher<[Country], Error> {
-        return request(withPath: "/classified_locations/countries", httpMethod: .get)
+// MARK: - SearchAPI
+extension WebService: SearchAPI {
+    func search(q: String = "", offset: Int = 0, completion: @escaping (Search) -> Void) {
+        let searchRequest = SearchRequest(parameters: ["q": q, "offset": offset])
+        fetch(request: searchRequest, completion: completion)
     }
 }
 
-// MARK: - WebServiceSitesProtocol
-extension WebService: WebServiceSitesProtocol {
-    func getSites() -> AnyPublisher<[Site], Error> {
-        return request(withPath: "/sites", httpMethod: .get)
+// MARK: - CountriesAPI
+extension WebService: CountriesAPI {
+    func getCountries(completion: @escaping (([Country]) -> Void)) {
+        let countriesRequest = CountriesRequest()
+        fetch(request: countriesRequest, completion: completion)
     }
 }
+
+
+
+
 

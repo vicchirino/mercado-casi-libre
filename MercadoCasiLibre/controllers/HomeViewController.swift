@@ -11,8 +11,6 @@ import Combine
 
 class HomeViewController: UIViewController {
     
-    private var cancellable: AnyCancellable?
-
     private var currentSearch: Search!
     
     private lazy var searchHeaderView: SearchHeaderView = {
@@ -82,13 +80,12 @@ class HomeViewController: UIViewController {
     }
 
     private func search(text: String = "", offset: Int = 0) {
-        cancellable = WebService().search(q: text, offset: offset)
-            .sink {error in
-            print(error)
-        } receiveValue: {[weak self] search in
+        WebService().search(q: text, offset: offset) {[weak self] search in
             self?.currentSearch = search
             self?.resultTableViewController.totalResults = search.paging.total
-            self?.resultTableViewController.setItems(items: search.results, forNewSearch: text != self?.currentSearch.query)
+            self?.resultTableViewController.setItems(
+                items: search.results,
+                forNewSearch: text != self?.currentSearch.query)
             self?.filtersHeaderView.setResults(numberOfItems: search.paging.total)
         }
     }
