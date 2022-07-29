@@ -88,11 +88,8 @@ class SearchHeaderView: UIView {
     private func clearSearch() {
         searchBarView.text = nil
         searchBarView.resignFirstResponder()
-        UIView.animate(withDuration: 0.0, delay: 0, options: UIView.AnimationOptions.curveLinear, animations: {
-            self.magnifierButton.isHidden = false
-            self.searchBarView.alpha = 0
-        }, completion: nil)
-
+        magnifierButton.isHidden = false
+            searchBarView.alpha = 0
     }
     
     func displayBackButton() {

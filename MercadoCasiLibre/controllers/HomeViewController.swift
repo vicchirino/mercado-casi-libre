@@ -87,6 +87,7 @@ class HomeViewController: UIViewController {
     private func search(text: String = "", offset: Int = 0) {
         WebService().search(q: text, offset: offset) {[weak self] search, error in
             if error != nil {
+                // TODO: - Handle error in the UI/UX
                 print("Handle Error in UX")
                 return
             }
@@ -103,11 +104,11 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: ResultTableControllerDelegate {
     func resultTableControllerLoadMore() {
-        search(text: searchHeaderView.searchText, offset: (currentSearch.paging.limit + currentSearch.paging.offset))
+        search(text: currentSearch.query ?? searchHeaderView.searchText, offset: (currentSearch.paging.limit + currentSearch.paging.offset))
     }
     
     func resultTableControllerItemDidSelected(item: Item) {
-        searchHeaderView.displayBackButton()
+        // TODO: - Move this transition to other place.
         UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseInOut, animations: {
             self.filtersHeaderView.snp.remakeConstraints { [weak self] make in
                 make.leading.equalTo(self?.mainStackView.snp.leading ?? 0)
@@ -117,6 +118,7 @@ extension HomeViewController: ResultTableControllerDelegate {
             self.mainStackView.layoutIfNeeded()
         }, completion: { _ in
             self.filtersHeaderView.isHidden = true
+            self.searchHeaderView.displayBackButton()
         })
     }
 }
@@ -133,8 +135,9 @@ extension HomeViewController: SearchHeaderViewDelegate {
     }
     
     func searchHeaderViewBackButtonTapped() {
+        // TODO: - Move this transition to other place.
         resultNavigationController.popToRootViewController(animated: true)
-        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.15, delay: 0.15, options: .curveEaseInOut, animations: {
             self.filtersHeaderView.isHidden = false
             self.filtersHeaderView.snp.remakeConstraints { [weak self] make in
                 make.leading.equalTo(self?.mainStackView.snp.leading ?? 0)
