@@ -114,7 +114,7 @@ class ItemTableViewCell: UITableViewCell {
         title.sizeToFit()
         price.text = NumberFormatter.localizedString(from: NSNumber(value: item.price), number: .currency)
         price.sizeToFit()
-        itemImageView.sd_setImage(with: URL(string: item.thumbnail))
+        itemImageView.sd_setImage(with: URL(string: item.thumbnail), placeholderImage: UIImage(named: "placeholder.png"))
     }
     
 }

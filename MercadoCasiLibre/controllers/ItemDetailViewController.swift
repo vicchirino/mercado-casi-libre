@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Toaster
 
 class ItemDetailViewController: UIViewController {
     
@@ -22,17 +23,13 @@ class ItemDetailViewController: UIViewController {
         view.backgroundColor = .white
         WebService().getItems(ids: [item.id]) {[weak self] items, error in
             if error != nil {
-                // TODO: - Handle error in the UI/UX
-                print("Handle error in the UI/UX")
+                Toast(text: error?.errorDescription).show()
                 return
             }
-            
             guard let item = items?[0] else {
-                // TODO: - Handle error in the UI/UX No results
-                print("Handle error in the UI/UX")
+                Toast(text: CustomError.notFound.errorDescription).show()
                 return
             }
-            
             self?.itemDetailView.configure(withItem: item)
         }
     }

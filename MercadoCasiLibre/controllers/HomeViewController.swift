@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Combine
+import Toaster
 
 class HomeViewController: UIViewController {
     
@@ -88,11 +89,11 @@ class HomeViewController: UIViewController {
         WebService().search(q: text, offset: offset) {[weak self] search, error in
             if error != nil {
                 // TODO: - Handle error in the UI/UX
-                print("Handle Error in UX")
-                return
+                Toast(text: error?.errorDescription).show()
+            } else {
+                self?.resultTableViewController.setSearch(search: search)
+                self?.filtersHeaderView.setResults(numberOfItems: search.paging.total)
             }
-            self?.resultTableViewController.setSearch(search: search)
-            self?.filtersHeaderView.setResults(numberOfItems: search.paging.total)
             self?.currentSearch = search
         }
     }

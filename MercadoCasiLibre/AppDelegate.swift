@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toaster
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             barAppearance.backgroundColor = .yellowColor
         }
+        
+        ToastView.appearance().backgroundColor = .systemRed
+        ToastView.appearance().layer.borderWidth = 4
+        ToastView.appearance().layer.cornerRadius = 2
+
+        ToastView.appearance().textColor = .lightGrayColor
+        ToastView.appearance().font = .boldSystemFont(ofSize: 22)
         
         return true
     }

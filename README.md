@@ -8,6 +8,7 @@ https://user-images.githubusercontent.com/3228237/180879851-9fb62ee9-3b2a-433f-b
 - SwiftIcons: https://github.com/ranesr/SwiftIcons
 - SnapKit: https://github.com/SnapKit/SnapKit
 - SDWebImage: https://github.com/SDWebImage/SDWebImage
+- Toaster: https://github.com/devxoul/Toaster
 
 ### Resources
 - Mercado Libre developer: https://developers.mercadolibre.com.ar

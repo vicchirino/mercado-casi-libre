@@ -67,7 +67,8 @@ class ItemPicturesView: UIView {
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFit
             imageView.sd_setImage(with: URL(string: picture.url))
-            
+            imageView.sd_setImage(with: URL(string: picture.url), placeholderImage: UIImage(named: "placeholder.png"))
+
             scrollContentStackView.addArrangedSubview(imageView)
                         
             imageView.snp.makeConstraints { make in

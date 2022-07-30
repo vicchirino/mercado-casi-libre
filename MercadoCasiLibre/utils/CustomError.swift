@@ -49,20 +49,21 @@ extension CustomError: CustomStringConvertible {
 }
 
 extension CustomError: LocalizedError {
+    /// I will be using this description for displaying on the UI
     public var errorDescription: String? {
         switch self {
         case .notFound:
-            return NSLocalizedString("The specified item could not be found.", comment: "Resource not found")
+            return NSLocalizedString("No se encontro lo solicitado.", comment: "Resource not found")
         case .invalidURL:
-            return NSLocalizedString("Couldn't build the URL", comment: "Invalid url")
+            return NSLocalizedString("Algo salio mal ...", comment: "Invalid url")
         case .fetchingError:
-            return NSLocalizedString("Failed when fetching the API.", comment: "Fetching error")
+            return NSLocalizedString("Algo salio mal ...", comment: "Fetching error")
         case .dataCorrupted:
-            return NSLocalizedString("Failed when getting Data.", comment: "Data corrupted")
+            return NSLocalizedString("Algo salio mal ...", comment: "Data corrupted")
         case .decodingError:
-            return NSLocalizedString("Failed to decode data.", comment: "Decoding error")
+            return NSLocalizedString("Algo salio mal ...", comment: "Decoding error")
         case .unexpected(_):
-            return NSLocalizedString("An unexpected error occurred.", comment: "Unexpected error")
+            return NSLocalizedString("Algo salio mal ...", comment: "Unexpected error")
         }
     }
 }
