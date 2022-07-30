@@ -110,6 +110,15 @@ extension WebService: CountriesAPI {
 
 // MARK: - ItemsAPI
 extension WebService: ItemsAPI {
+    func getItemsDescription(ids: [String], completion: @escaping (ItemsDescriptionResponse?, CustomError?) -> Void) {
+        // FIXME: - For sake of complexity will be getting description for an individual Item rather than a list of Items
+        if ids.count == 0 {
+            return
+        }
+        let itemsDescriptionRequest = ItemsDescriptionRequest(path: "/items/\(ids[0])/description")
+        fetch(request: itemsDescriptionRequest, completion: completion)
+    }
+    
     func getItems(ids: [String], completion: @escaping ([Item]?, CustomError?) -> Void) {
         let itemsRequest = ItemsRequest(parameters: ["ids": ids.joined(separator: ",")])
         fetch(request: itemsRequest, completion: completion)

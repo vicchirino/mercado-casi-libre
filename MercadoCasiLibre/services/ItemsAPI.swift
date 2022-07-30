@@ -9,6 +9,7 @@ import Foundation
 
 protocol ItemsAPI {
     func getItems(ids: [String], completion: @escaping ([Item]?, CustomError?) -> Void)
+    func getItemsDescription(ids: [String], completion: @escaping (ItemsDescriptionResponse?, CustomError?) -> Void)
 }
 
 struct ItemsRequest: Request {    
@@ -29,5 +30,24 @@ struct ItemsRequest: Request {
             completion(nil, .decodingError)
         }
     }
+}
+
+struct ItemsDescriptionRequest: Request {
+    typealias ModelType = ItemsDescriptionResponse
+    
+    var path: String
+    var httpMethod = HTTPMethod.get
+    var parameters: [String : Any]?
+    
+    func decode(data: Data, completion: (ItemsDescriptionResponse?, CustomError?) -> Void) {
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         
+        do {
+            let itemDescriptionResponse = try jsonDecoder.decode(ItemsDescriptionResponse.self, from: data)
+            completion(itemDescriptionResponse, nil)
+        } catch {
+            completion(nil, .decodingError)
+        }
+    }
 }

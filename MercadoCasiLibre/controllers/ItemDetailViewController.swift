@@ -21,6 +21,10 @@ class ItemDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        fetchItemDetails()
+    }
+    
+    private func fetchItemDetails() {
         WebService().getItems(ids: [item.id]) {[weak self] items, error in
             if error != nil {
                 Toast(text: error?.errorDescription).show()
@@ -31,6 +35,18 @@ class ItemDetailViewController: UIViewController {
                 return
             }
             self?.itemDetailView.configure(withItem: item)
+        }
+        // FIXME: ¿Por qué un endpoint aparte para obtener la descripcion del item?
+        WebService().getItemsDescription(ids: [item.id]) { [weak self] itemsDescription, error in
+            if error != nil {
+                Toast(text: error?.errorDescription).show()
+                return
+            }
+            guard let descriptions = itemsDescription else {
+                Toast(text: CustomError.notFound.errorDescription).show()
+                return
+            }
+            self?.itemDetailView.setItemDescription(text: descriptions.text)
         }
     }
     
