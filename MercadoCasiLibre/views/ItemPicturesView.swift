@@ -32,6 +32,7 @@ class ItemPicturesView: UIView {
         return stackView
     }()
     
+    // TODO: - Add page indicator label above scroll.
     private lazy var pageIndicatorLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center

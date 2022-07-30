@@ -91,10 +91,7 @@ class HomeViewController: UIViewController {
                 print("Handle Error in UX")
                 return
             }
-            self?.resultTableViewController.totalResults = search.paging.total
-            self?.resultTableViewController.setItems(
-                items: search.results,
-                forNewSearch: text != self?.currentSearch?.query ?? "")
+            self?.resultTableViewController.setSearch(search: search)
             self?.filtersHeaderView.setResults(numberOfItems: search.paging.total)
             self?.currentSearch = search
         }

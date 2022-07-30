@@ -15,9 +15,15 @@ protocol ResultTableControllerDelegate {
 
 class ResultTableController: UITableViewController {
     
-    @Published private var items: [Item] = []
+//    private var items: [Item] = []
+    private var currentSearch: Search = Search.placeHolder()
+    
     var delegate: ResultTableControllerDelegate?
     var totalResults: Int = 0
+    
+    private var query: String = ""
+    
+    private var isLoading: Bool = false
     
     private lazy var emptyStateView: UIView = {
         let view = UIView()
@@ -27,9 +33,10 @@ class ResultTableController: UITableViewController {
     
     private lazy var emptyStateText: UILabel = {
         let label = UILabel()
-        label.text = "Usa el buscador para obtener resultados"
+        label.text = "No hay resultados. Usa el buscador"
         label.numberOfLines = 3
-        label.font = .systemFont(ofSize: 18.0)
+        label.textAlignment = .center
+        label.font = .boldSystemFont(ofSize: 22.0)
         return label
     }()
     
@@ -50,21 +57,34 @@ class ResultTableController: UITableViewController {
         emptyStateView.addSubview(emptyStateText)
     }
     
-    func setItems(items: [Item], forNewSearch: Bool = false) {
-        if forNewSearch {
-            self.items = items
-        } else {
-            self.items.append(contentsOf: items)
+    func setSearch(search: Search) {
+        let newPage = search.query == self.currentSearch.query
+        var currentResults = self.currentSearch.results
+        if search.results.count == 0 {
+            emptyStateText.text = search.query == nil ?
+                "No hay resultados. Usa el buscador"
+            : search.query != self.currentSearch.query ?
+                "No hay resultados para '\(search.query ?? "")'"
+            : "Usa el buscador para obtener resultados"
         }
+        
+        self.currentSearch = search
+        
+        if newPage {
+            currentResults.append(contentsOf: self.currentSearch.results)
+            self.currentSearch.results = currentResults
+        }
+        totalResults = self.currentSearch.paging.total
         tableView.reloadData()
     }
     
     private func setEmptyStateView() {
         tableView.backgroundView = emptyStateView
-        
+            
         emptyStateText.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
+            make.width.lessThanOrEqualToSuperview().offset(-80)
         }
     }
     
@@ -80,7 +100,7 @@ extension ResultTableController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var rows = items.count
+        var rows = currentSearch.results.count
         if rows == 0 {
             setEmptyStateView()
         } else {
@@ -93,7 +113,7 @@ extension ResultTableController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == items.count {
+        if indexPath.row == currentSearch.results.count {
             return 40
         } else {
             return 170
@@ -102,7 +122,7 @@ extension ResultTableController {
             
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
-        if row == items.count {
+        if row == currentSearch.results.count {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: LoadMoreTableViewCell.identifier, for: indexPath) as? LoadMoreTableViewCell else {
                 fatalError("Failed to get expected kind of reusable cell from the tableView. Expected type `LoadMoreTableViewCell`")
             }
@@ -111,7 +131,7 @@ extension ResultTableController {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ItemTableViewCell.identifier, for: indexPath) as? ItemTableViewCell else {
                 fatalError("Failed to get expected kind of reusable cell from the tableView. Expected type `ItemTableViewCell`")
             }
-            cell.configureCell(item: items[row])
+            cell.configureCell(item: currentSearch.results[row])
             return cell
         }
     }
@@ -133,11 +153,11 @@ extension ResultTableController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
-        if row == items.count {
+        if row == currentSearch.results.count {
             // The LoadMoreTableViewCell was pressed. Do nothing.
             return
         }
-        let item = items[row]
+        let item = currentSearch.results[row]
         let itemDetailViewController = ItemDetailViewController(item: item)
         
         delegate?.resultTableControllerItemDidSelected(item: item)
