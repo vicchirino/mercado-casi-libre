@@ -7,12 +7,15 @@
 
 import UIKit
 import Toaster
+import Network
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    let monitor = NWPathMonitor()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+                
         let barAppearance = UINavigationBar.appearance()
 
         if #available(iOS 15, *) {
@@ -30,6 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ToastView.appearance().textColor = .lightGrayColor
         ToastView.appearance().font = .boldSystemFont(ofSize: 22)
+        
+        monitor.start(queue: .global()) // Deliver updates on the background queue
+
+        monitor.pathUpdateHandler = { path in
+            if path.status != .satisfied {
+                Toast(text: CustomError.noNetworkConection).show()
+            }
+        }
         
         return true
     }

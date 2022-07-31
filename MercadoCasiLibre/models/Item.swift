@@ -17,6 +17,7 @@ struct ItemsDescriptionResponse: Decodable {
     enum CodingKeys: String, CodingKey {
         case text = "plainText"
     }
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         text = try values.decode(String.self, forKey: .text)

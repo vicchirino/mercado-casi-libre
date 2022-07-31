@@ -104,6 +104,7 @@ class ItemDetailView: UIView {
         stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.backgroundColor = .lightGrayColor
+        stackView.alpha = 0
         return stackView
     }()
     
@@ -157,7 +158,11 @@ class ItemDetailView: UIView {
     }
     
     func setItemDescription(text: String) {
+        guard text != "" else {
+            return
+        }
         descriptionLabel.text = text
+        itemDescriptionStackView.alpha = 1
     }
     
 }

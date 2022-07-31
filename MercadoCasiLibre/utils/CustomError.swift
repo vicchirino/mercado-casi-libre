@@ -8,6 +8,8 @@
 import Foundation
 
 enum CustomError: Error {
+    /// Throw when there is no internet coenction
+    case noNetworkConection
     /// Throw when an expected resource is not found
     case notFound
     /// Throw when couldn't build URL
