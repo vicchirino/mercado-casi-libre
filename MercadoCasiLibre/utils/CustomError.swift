@@ -18,6 +18,8 @@ enum CustomError: Error {
     case dataCorrupted
     /// Throw when decoding API fail
     case decodingError
+    /// Throw when feature is not available
+    case featureUnavailable
     /// Throw in all other cases
     case unexpected(code: Int)
 }
@@ -42,6 +44,8 @@ extension CustomError: CustomStringConvertible {
             return "Failed when getting Data."
         case .decodingError:
             return "Failed to decode data."
+        case .featureUnavailable:
+            return "Feature not available."
         case .unexpected(_):
             return "An unexpected error occurred."
         }
@@ -62,6 +66,8 @@ extension CustomError: LocalizedError {
             return NSLocalizedString("Algo salio mal ...", comment: "Data corrupted")
         case .decodingError:
             return NSLocalizedString("Algo salio mal ...", comment: "Decoding error")
+        case .featureUnavailable:
+            return NSLocalizedString("Modulo no disponible todavia", comment: "Feature not available")
         case .unexpected(_):
             return NSLocalizedString("Algo salio mal ...", comment: "Unexpected error")
         }

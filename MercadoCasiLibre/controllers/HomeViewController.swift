@@ -132,6 +132,10 @@ extension HomeViewController: SearchHeaderViewDelegate {
         search(text: text, offset: 0)
     }
     
+    func searchHeaderViewCartButtonTapped() {
+        Toast(text: CustomError.featureUnavailable.errorDescription).show()
+    }
+    
     func searchHeaderViewBackButtonTapped() {
         // TODO: - Move this transition to other place.
         resultNavigationController.popToRootViewController(animated: true)

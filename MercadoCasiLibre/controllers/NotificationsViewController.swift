@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import Toaster
 
 class NotificationsViewController: UIViewController {
     
     private lazy var loginEmptyStateView: LoginEmptyStateView = {
         let view = LoginEmptyStateView()
+        view.delegate = self
         view.configure(type: .notification)
         return view
     }()
@@ -29,5 +31,12 @@ class NotificationsViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
+    }
+}
+
+// MARK: - LoginEmptyStateDelegate
+extension NotificationsViewController: LoginEmptyStateDelegate {
+    func loginEmptyStateDelegteLoginButtonTapped() {
+        Toast(text: CustomError.featureUnavailable.errorDescription).show()
     }
 }

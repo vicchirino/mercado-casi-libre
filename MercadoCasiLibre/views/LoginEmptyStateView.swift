@@ -31,7 +31,13 @@ enum EmptyStateType {
     }
 }
 
+protocol LoginEmptyStateDelegate {
+    func loginEmptyStateDelegteLoginButtonTapped()
+}
+
 class LoginEmptyStateView: UIView {
+    
+    var delegate: LoginEmptyStateDelegate?
     
     private lazy var emptyStateImageView: UIImageView = {
         let imageView = UIImageView()
@@ -53,6 +59,7 @@ class LoginEmptyStateView: UIView {
         button.setTitle("Ingresa a tu cuenta", for: .normal)
         button.backgroundColor = .blueColor
         button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         button.setTitleColor(.white, for: .normal)
         return button
     }()
@@ -96,6 +103,10 @@ class LoginEmptyStateView: UIView {
     func configure(type: EmptyStateType) {
         emptyStateImageView.image = UIImage(named: type.imageName)
         emptyStateLabel.text = type.title
+    }
+    
+    @objc private func loginButtonTapped() {
+        delegate?.loginEmptyStateDelegteLoginButtonTapped()
     }
     
 }

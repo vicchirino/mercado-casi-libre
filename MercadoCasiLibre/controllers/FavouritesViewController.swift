@@ -7,11 +7,13 @@
 
 import UIKit
 import SnapKit
+import Toaster
 
 class FavouritesViewController: UIViewController {
     
     private lazy var loginEmptyStateView: LoginEmptyStateView = {
         let view = LoginEmptyStateView()
+        view.delegate = self
         view.configure(type: .favorite)
         return view
     }()
@@ -25,11 +27,15 @@ class FavouritesViewController: UIViewController {
     
     private func setupViews() {
         view.addSubview(loginEmptyStateView)
-        
         loginEmptyStateView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
     }
-    
+}
+
+// MARK: - LoginEmptyStateDelegate
+extension FavouritesViewController: LoginEmptyStateDelegate {
+    func loginEmptyStateDelegteLoginButtonTapped() {
+        Toast(text: CustomError.featureUnavailable.errorDescription).show()
+    }
 }

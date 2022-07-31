@@ -12,6 +12,7 @@ import SwiftIcons
 protocol SearchHeaderViewDelegate {
     func searchHeaderViewDidEndSearch(withText text: String)
     func searchHeaderViewBackButtonTapped()
+    func searchHeaderViewCartButtonTapped()
 }
 
 class SearchHeaderView: UIView {
@@ -121,6 +122,7 @@ class SearchHeaderView: UIView {
         
     @objc private func cartButtonTapped() {
         print("Cart button tapped")
+        delegate?.searchHeaderViewCartButtonTapped()
     }
     
     @objc private func magnifierButtonTapped() {
