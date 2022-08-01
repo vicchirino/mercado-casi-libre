@@ -8,8 +8,8 @@
 import Foundation
 
 enum CustomError: Error {
-    /// Throw when there is no internet coenction
-    case noNetworkConection
+    /// Throw when there is no internet coennction
+    case noNetworkConnection
     /// Throw when an expected resource is not found
     case notFound
     /// Throw when couldn't build URL
@@ -38,6 +38,8 @@ extension CustomError: CustomStringConvertible {
         switch self {
         case .notFound:
             return "The specified item could not be found."
+        case .noNetworkConnection:
+            return "There is not network connection"
         case .invalidURL:
             return "Couldn't build the URL."
         case .fetchingError:
@@ -60,6 +62,8 @@ extension CustomError: LocalizedError {
         switch self {
         case .notFound:
             return NSLocalizedString("No se encontro lo solicitado.", comment: "Resource not found")
+        case .noNetworkConnection:
+            return NSLocalizedString("No hay conexion", comment: "Not network coennection")
         case .invalidURL:
             return NSLocalizedString("Algo salio mal ...", comment: "Invalid url")
         case .fetchingError:

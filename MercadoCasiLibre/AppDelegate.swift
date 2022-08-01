@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         monitor.pathUpdateHandler = { path in
             if path.status != .satisfied {
-                Toast(text: CustomError.noNetworkConection).show()
+                Toast(text: CustomError.noNetworkConnection.errorDescription).show()
             }
         }
         
