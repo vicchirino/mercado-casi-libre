@@ -47,10 +47,10 @@ class ItemsAPITests: XCTestCase {
         XCTAssertEqual(firstItem.soldQuantity, 2)
         XCTAssertEqual(firstItem.condition, "Nuevo")
         
-        let picturesCount = try XCTUnwrap(firstItem.pictures?.count)
+        let picturesCount = try XCTUnwrap(firstItem.pictures.count)
         XCTAssertGreaterThan(picturesCount, 0)
         
-        let firstPicture = try XCTUnwrap(firstItem.pictures?[0])
+        let firstPicture = try XCTUnwrap(firstItem.pictures[0])
 
         XCTAssertEqual(firstPicture.maxSize, "1200x600")
         XCTAssertEqual(firstPicture.size, "500x250")

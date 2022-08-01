@@ -38,8 +38,8 @@ struct Item: Decodable {
     struct Picture: Decodable {
         let id: String
         let url: String
-//        var size: String
-//        var maxSize: String
+        var size: String
+        var maxSize: String
     }
     
     var pictures: [Picture]

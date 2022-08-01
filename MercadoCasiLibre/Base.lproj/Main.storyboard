@@ -3,123 +3,9 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Favoritos-->
-        <scene sceneID="Jey-O3-xiT">
-            <objects>
-                <viewController id="6cf-GC-xwX" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="c5W-AQ-PPO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="qmh-Xe-pOm"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Favoritos" id="a4u-32-EVK"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="G5g-aF-VOi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="922" y="-537"/>
-        </scene>
-        <!--Inicio-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="MercadoCasiLibre" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Inicio" id="eAM-JD-vyd" userLabel="Home"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="922" y="125"/>
-        </scene>
-        <!--Notificationes-->
-        <scene sceneID="ymc-3C-MG4">
-            <objects>
-                <viewController id="7rp-jN-iaJ" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="NPL-89-cFl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="Pms-hq-0xK"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Notificationes" id="df4-pZ-Hqu"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="q4C-3T-g2D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="922" y="-1209"/>
-        </scene>
-        <!--Mis Compras-->
-        <scene sceneID="LSU-HT-iWt">
-            <objects>
-                <viewController id="Tzl-vv-m38" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="QZz-AX-jr8">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="C9Z-it-6m7"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Mis Compras" id="nkB-GP-1HK"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qHX-cN-c1v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="922" y="859"/>
-        </scene>
-        <!--Mas-->
-        <scene sceneID="Ogf-Yn-vY2">
-            <objects>
-                <viewController id="zee-VG-C19" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Hi0-8E-xbc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="RCm-ao-axF"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Mas" id="HAZ-Od-niF"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qxn-3R-DV3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="922" y="1532"/>
-        </scene>
-        <!--Item 2-->
-        <scene sceneID="Nf4-3g-kT0">
-            <objects>
-                <viewController id="1jw-hA-tEf" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="65a-uA-2iC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="Zo7-PT-kP6"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="Hkb-EW-gsk"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Zvd-8U-Sei" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="65" y="138"/>
-        </scene>
-        <!--Item 1-->
-        <scene sceneID="Ncf-fZ-u2z">
-            <objects>
-                <viewController id="vqe-3R-FSL" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="0Yb-Tm-I7L">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="NAl-Hc-ZIY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="NhT-s7-X2z"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="A8k-it-cEO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="65" y="783"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Z1P-I8-1Yq">
             <objects>
@@ -135,9 +21,4 @@
             <point key="canvasLocation" x="-845" y="440"/>
         </scene>
     </scenes>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

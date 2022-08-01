@@ -9,7 +9,10 @@
       "title": "The Secret of Monkey Island",
       "price": 1200,
       "currency_id": "ARS",
-      "thumbnail": ""
+      "thumbnail": "",
+      "available_quantity": 6,
+      "sold_quantity": 0,
+      "condition": "new"
     },
     {
       "id": "2",
@@ -17,7 +20,10 @@
       "title": "Lechuck's Revenge",
       "price": 1100,
       "currency_id": "ARS",
-      "thumbnail": ""
+      "thumbnail": "",
+      "available_quantity": 19,
+      "sold_quantity": 3,
+      "condition": "new"
     },
     {
       "id": "3",
@@ -25,7 +31,10 @@
       "title": "The Curse of Monkey Island",
       "price": 1150,
       "currency_id": "ARS",
-      "thumbnail": ""
+      "thumbnail": "",
+      "available_quantity": 1,
+      "sold_quantity": 0,
+      "condition": "used"
     }
   ],
   "paging": {

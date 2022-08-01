@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 private let PICTURES_PADDING = 20.0
 
