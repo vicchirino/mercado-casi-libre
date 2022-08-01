@@ -4,10 +4,15 @@ Una copia de la aplicacion iOS de Mercado Libre, utilizando la API que ellos pro
 
 https://user-images.githubusercontent.com/3228237/180879851-9fb62ee9-3b2a-433f-b30b-1aa69d700efe.mov
 
-### Run
+## Run
 - Descarga el repositorio
 - Ejecutar `pod install` en el directorio del repositorio
 - Correr en Xcode
+
+### Desde acá (Que falta)
+- UI testing
+- Login y el uso del access token
+- Filtrar búsquedas
 
 ### API usadas:
 - Items y busqueda: https://developers.mercadolibre.com.ar/es_ar/items-y-busquedas
