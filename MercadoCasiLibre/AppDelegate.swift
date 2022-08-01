@@ -4,7 +4,6 @@
 //
 //  Created by Victor Chirino on 20/07/2022.
 //
-
 import UIKit
 import Toaster
 import Network
@@ -35,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ToastView.appearance().font = .boldSystemFont(ofSize: 22)
         
         monitor.start(queue: .global()) // Deliver updates on the background queue
-
         monitor.pathUpdateHandler = { path in
             if path.status != .satisfied {
                 Toast(text: CustomError.noNetworkConnection.errorDescription).show()
@@ -46,7 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: UISceneSession Lifecycle
-
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
@@ -59,4 +56,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 }
-

@@ -18,7 +18,7 @@ xcuserdata/
 project.xcworkspace/
 DerivedData/
 /Packages
-/*.xcodeproj
+# /*.xcodeproj
 xcuserdata/
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 

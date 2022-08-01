@@ -16,8 +16,4 @@ target 'MercadoCasiLibre' do
     # Pods for testing
   end
 
-  target 'MercadoCasiLibreUITests' do
-    # Pods for testing
-  end
-
 end
