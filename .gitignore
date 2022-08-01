@@ -15,7 +15,7 @@
 
 # Xcode
 xcuserdata/
-project.xcworkspace/
+/*.xcworkspace/
 DerivedData/
 /Packages
 # /*.xcodeproj

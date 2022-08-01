@@ -9,8 +9,9 @@ https://user-images.githubusercontent.com/3228237/182175994-d6f79984-6d9d-4baa-9
 ## Run
 - Descarga el repositorio
 - Ejecutar `pod install` en el directorio del repositorio
+- Abrir el archivo `.xcworkspace` generado.
 - Correr en Xcode
-
+- Correr Tests. 
 
 ### Desde acá (Que falta)
 - UI testing

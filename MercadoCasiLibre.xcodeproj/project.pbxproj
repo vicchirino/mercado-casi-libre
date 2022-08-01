@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0516492DE431C95757DEEEDA /* Pods_MercadoCasiLibre.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27EF90DA507493BD161527E7 /* Pods_MercadoCasiLibre.framework */; };
-		5A7E4626102CBC272942E425 /* Pods_MercadoCasiLibre_MercadoCasiLibreUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3E42FE968B539B03EF75EB /* Pods_MercadoCasiLibre_MercadoCasiLibreUITests.framework */; };
 		83DFF294289825AD00E1F61F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DFF293289825AD00E1F61F /* AppDelegate.swift */; };
 		83DFF296289825AD00E1F61F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DFF295289825AD00E1F61F /* SceneDelegate.swift */; };
 		83DFF29B289825AD00E1F61F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83DFF299289825AD00E1F61F /* Main.storyboard */; };
@@ -105,9 +104,7 @@
 
 /* Begin PBXFileReference section */
 		02F8D82740CD67AC18A1F768 /* Pods-MercadoCasiLibre.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoCasiLibre.debug.xcconfig"; path = "Target Support Files/Pods-MercadoCasiLibre/Pods-MercadoCasiLibre.debug.xcconfig"; sourceTree = "<group>"; };
-		0A3E42FE968B539B03EF75EB /* Pods_MercadoCasiLibre_MercadoCasiLibreUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoCasiLibre_MercadoCasiLibreUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		27EF90DA507493BD161527E7 /* Pods_MercadoCasiLibre.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoCasiLibre.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		33857D6B69ECEAF3446945A3 /* Pods-MercadoCasiLibre-MercadoCasiLibreUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoCasiLibre-MercadoCasiLibreUITests.debug.xcconfig"; path = "Target Support Files/Pods-MercadoCasiLibre-MercadoCasiLibreUITests/Pods-MercadoCasiLibre-MercadoCasiLibreUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		34591AB6A6B60794842CF415 /* Pods-MercadoCasiLibreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoCasiLibreTests.debug.xcconfig"; path = "Target Support Files/Pods-MercadoCasiLibreTests/Pods-MercadoCasiLibreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		74FE95B840E60B11430DFDA5 /* Pods-MercadoCasiLibreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoCasiLibreTests.release.xcconfig"; path = "Target Support Files/Pods-MercadoCasiLibreTests/Pods-MercadoCasiLibreTests.release.xcconfig"; sourceTree = "<group>"; };
 		83DFF290289825AD00E1F61F /* MercadoCasiLibre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MercadoCasiLibre.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,7 +156,6 @@
 		83ED347E2898292100394C8B /* MercadoCasiLibreUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoCasiLibreUITests.swift; sourceTree = "<group>"; };
 		83ED347F2898292100394C8B /* MercadoCasiLibreUITestsLaunchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoCasiLibreUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		8CE8AEF4E2330B83C9061C1C /* Pods_MercadoCasiLibreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoCasiLibreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8ECBCA8AEA115E9F699169E8 /* Pods-MercadoCasiLibre-MercadoCasiLibreUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoCasiLibre-MercadoCasiLibreUITests.release.xcconfig"; path = "Target Support Files/Pods-MercadoCasiLibre-MercadoCasiLibreUITests/Pods-MercadoCasiLibre-MercadoCasiLibreUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ACDA7851A1FD4360A49257F7 /* Pods-MercadoCasiLibre.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoCasiLibre.release.xcconfig"; path = "Target Support Files/Pods-MercadoCasiLibre/Pods-MercadoCasiLibre.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -184,7 +180,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A7E4626102CBC272942E425 /* Pods_MercadoCasiLibre_MercadoCasiLibreUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,8 +191,6 @@
 			children = (
 				02F8D82740CD67AC18A1F768 /* Pods-MercadoCasiLibre.debug.xcconfig */,
 				ACDA7851A1FD4360A49257F7 /* Pods-MercadoCasiLibre.release.xcconfig */,
-				33857D6B69ECEAF3446945A3 /* Pods-MercadoCasiLibre-MercadoCasiLibreUITests.debug.xcconfig */,
-				8ECBCA8AEA115E9F699169E8 /* Pods-MercadoCasiLibre-MercadoCasiLibreUITests.release.xcconfig */,
 				34591AB6A6B60794842CF415 /* Pods-MercadoCasiLibreTests.debug.xcconfig */,
 				74FE95B840E60B11430DFDA5 /* Pods-MercadoCasiLibreTests.release.xcconfig */,
 			);
@@ -360,7 +353,6 @@
 			isa = PBXGroup;
 			children = (
 				27EF90DA507493BD161527E7 /* Pods_MercadoCasiLibre.framework */,
-				0A3E42FE968B539B03EF75EB /* Pods_MercadoCasiLibre_MercadoCasiLibreUITests.framework */,
 				8CE8AEF4E2330B83C9061C1C /* Pods_MercadoCasiLibreTests.framework */,
 			);
 			name = Frameworks;
@@ -411,11 +403,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83DFF2C0289825AD00E1F61F /* Build configuration list for PBXNativeTarget "MercadoCasiLibreUITests" */;
 			buildPhases = (
-				865539A5FD132BB1AE0A6993 /* [CP] Check Pods Manifest.lock */,
 				83DFF2AC289825AD00E1F61F /* Sources */,
 				83DFF2AD289825AD00E1F61F /* Frameworks */,
 				83DFF2AE289825AD00E1F61F /* Resources */,
-				7B7AA587B227C1035A011CA7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -505,45 +495,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7B7AA587B227C1035A011CA7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MercadoCasiLibre-MercadoCasiLibreUITests/Pods-MercadoCasiLibre-MercadoCasiLibreUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MercadoCasiLibre-MercadoCasiLibreUITests/Pods-MercadoCasiLibre-MercadoCasiLibreUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MercadoCasiLibre-MercadoCasiLibreUITests/Pods-MercadoCasiLibre-MercadoCasiLibreUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		865539A5FD132BB1AE0A6993 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MercadoCasiLibre-MercadoCasiLibreUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		937FF99948B3E098C3E52EB7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -944,7 +895,6 @@
 		};
 		83DFF2C1289825AD00E1F61F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33857D6B69ECEAF3446945A3 /* Pods-MercadoCasiLibre-MercadoCasiLibreUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -963,7 +913,6 @@
 		};
 		83DFF2C2289825AD00E1F61F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8ECBCA8AEA115E9F699169E8 /* Pods-MercadoCasiLibre-MercadoCasiLibreUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
