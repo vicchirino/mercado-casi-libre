@@ -2,12 +2,15 @@
 
 Una copia de la aplicacion iOS de Mercado Libre, utilizando la API que ellos proveen.
 
-https://user-images.githubusercontent.com/3228237/180879851-9fb62ee9-3b2a-433f-b30b-1aa69d700efe.mov
+
+https://user-images.githubusercontent.com/3228237/182175994-d6f79984-6d9d-4baa-9d8f-cbd048944c50.mov
+
 
 ## Run
 - Descarga el repositorio
 - Ejecutar `pod install` en el directorio del repositorio
 - Correr en Xcode
+
 
 ### Desde acá (Que falta)
 - UI testing
