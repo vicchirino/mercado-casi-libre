@@ -14,7 +14,7 @@ https://user-images.githubusercontent.com/3228237/182175994-d6f79984-6d9d-4baa-9
 - Correr Tests. 
 
 ### Desde acá (Que falta)
-- UI testing
+- UI testing y Unit testing en componentes
 - Login y el uso del access token
 - Filtrar búsquedas
 
